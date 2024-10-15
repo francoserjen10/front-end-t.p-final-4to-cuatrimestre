@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavBarComponent } from './components/navBar.component';
+import { NavBarComponent } from './components/navBar/navBar.component';
 import { DarkModeService } from './services/dark-mode.service';
 
 @Component({
