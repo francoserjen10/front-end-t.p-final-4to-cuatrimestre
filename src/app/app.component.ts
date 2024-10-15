@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavBarComponent } from './components/navBar.component';
+import { DarkModeService } from './services/dark-mode.service';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,6 @@ import { NavBarComponent } from './components/navBar.component';
 })
 export class AppComponent {
   title = 'bolsa-Noruega';
+
+  darkModeService = inject(DarkModeService)
 }
