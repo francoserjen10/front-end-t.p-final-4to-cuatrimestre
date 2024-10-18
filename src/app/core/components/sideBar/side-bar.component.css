@@ -57,3 +57,17 @@ span {
         border-bottom-color: rgba(255, 255, 255, 0.2);
     }
 }
+
+@media (min-width: 1200px) {
+    .col-xl-6 {
+        flex: 0 0 auto;
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        flex: 0 0 auto;
+        width: 100% !important;
+    }
+}
