@@ -53,6 +53,19 @@ app-side-bar {
     /* font-weight: bold; */
 }
 
+.open-close-bag {
+    display: flex;
+    align-items: center;
+}
+
+.open-close-bag i {
+    margin-right: 5px;
+    color: red;
+}
+
+.open-close-bag p {
+    margin: 0;
+}
 
 @media (min-width: 768px) {
     .content-variability {
