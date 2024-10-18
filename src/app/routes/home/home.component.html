@@ -1,5 +1,21 @@
-<div [attr.data-bs-theme]="darkModeService.darkModeSignal()">
-    <app-navBar/>
-    <app-side-bar/>
-    
+<div class="container-home" [attr.data-bs-theme]="darkModeService.darkModeSignal()">
+    <app-navBar />
+
+    <div class="layout">
+        <app-side-bar />
+
+        <div class="content-bag bg-body-tertiary">
+            <div class="title">
+                <h2>Oslo (OBX)</h2>
+            </div>
+            <div class="content-variability">
+                <h1>1358.90</h1>
+                <h3>+13,91 (+1,04%) <i class="bi bi-caret-up-fill"></i> </h3>
+            </div>
+            <div class="open-close-bag">
+                <i class="bi bi-clock"></i>
+                <p>Mercado cerrado</p>
+            </div>
+        </div>
+    </div>
 </div>
