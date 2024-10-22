@@ -43,8 +43,6 @@ ul{
 /* Estilo de los li en modo claro */
 .nav-item i,
 span {
-    color: black;
-    /* Texto negro en modo claro */
     color: var(--bs-body-color);
     /* Color dinámico según el modo (light/dark) */
     transition: color 0.3s ease;
