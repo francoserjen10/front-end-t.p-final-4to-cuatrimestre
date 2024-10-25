@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DarkModeService } from '../../services/dark-mode.service';
+
 
 @Component({
   selector: 'app-shell-plc',
@@ -8,5 +10,7 @@ import { Component } from '@angular/core';
   styleUrl: './shell-plc.component.css'
 })
 export class ShellPlcComponent {
+
+  darkModeService = inject(DarkModeService)
 
 }

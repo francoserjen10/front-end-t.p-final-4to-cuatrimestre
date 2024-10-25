@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DarkModeService } from '../../services/dark-mode.service';
+
 
 @Component({
   selector: 'app-visa-inc',
@@ -9,4 +11,5 @@ import { Component } from '@angular/core';
 })
 export class VisaIncComponent {
 
+  darkModeService = inject(DarkModeService)
 }
