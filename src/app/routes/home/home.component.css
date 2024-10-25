@@ -6,20 +6,6 @@
     /* Navbar arriba, resto abajo */
 }
 
-.layout {
-    display: flex;
-    /* width: 100%; */
-    /* flex: 12; */
-}
-
-.row {
-    background-color: aqua;
-}
-
-app-side-bar {
-    width: 20%;
-}
-
 .content-bag {
     flex: 1;
     /* Ocupa el espacio restante del layout */

@@ -1,0 +1,9 @@
+.layout {
+    display: flex;
+    /* width: 100%; */
+    /* flex: 12; */
+}
+
+app-side-bar {
+    width: 20%;
+}
