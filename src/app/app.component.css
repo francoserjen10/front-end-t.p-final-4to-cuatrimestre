@@ -1,9 +1,18 @@
-.layout {
+.container-app {
+    height: 100vh;
     display: flex;
-    /* width: 100%; */
-    /* flex: 12; */
+    flex-direction: column;
+    overflow: hidden;
+    /* Evitar scroll en el contenedor principal */
 }
 
-app-side-bar {
-    width: 20%;
+.layout {
+    display: flex;
+    flex: 1;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    height: 100vh;
 }
