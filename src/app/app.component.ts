@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DarkModeService } from './services/dark-mode.service';
+import { NavBarComponent } from './core/components/navBar/navBar.component';
+import { SideBarComponent } from './core/components/sideBar/side-bar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavBarComponent, SideBarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'bolsa-Noruega';
+
+  darkModeService = inject(DarkModeService)
 }
