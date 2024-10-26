@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DarkModeService } from '../../services/dark-mode.service';
 
 @Component({
   selector: 'app-jp-morgan-chase',
@@ -9,4 +10,5 @@ import { Component } from '@angular/core';
 })
 export class JpMorganChaseComponent {
 
+  darkModeService = inject(DarkModeService)
 }
