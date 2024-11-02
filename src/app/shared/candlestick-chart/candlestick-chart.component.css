@@ -1,0 +1,17 @@
+#container-chart {
+    position: absolute;
+    width: 60%;
+    height: 65%;
+}
+
+@media (max-width: 610px) {
+    #container-chart {
+        width: 55%;
+    }
+}
+
+@media (max-width: 576px) {
+    #container-chart {
+        height: 55%;
+    }
+}
