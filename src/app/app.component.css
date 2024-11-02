@@ -1,8 +1,8 @@
 .container-app {
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     /* Evitar scroll en el contenedor principal */
 }
 
@@ -12,7 +12,8 @@
 }
 
 .content {
+    width: 100%;
+    height: 100%;
     flex: 1;
     overflow-y: auto;
-    height: 100vh;
 }
