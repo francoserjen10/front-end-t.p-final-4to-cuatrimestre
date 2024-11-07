@@ -14,6 +14,9 @@
             </form>
             <!-- Boton de traduccion de la pagina a Noruego -->
             <!-- Boton de dark mode -->
+            <div class="button-lenguage-container">
+                <button><span>boton lenguaje</span></button>
+            </div>
             <div>
                 @if (darkModeService.darkModeSignal() === "dark") {
                 <span (click)="toggleDarkMode()">
