@@ -1,0 +1,9 @@
+<div class="container-fluid">
+    <div class="ticker-container">
+        <div class="ticker-content">
+            <span class="span-stock" *ngFor="let stock of stocks">
+                {{ stock.symbol }} {{ stock.price }} {{ stock.change }}
+            </span>
+        </div>
+    </div>
+</div>
