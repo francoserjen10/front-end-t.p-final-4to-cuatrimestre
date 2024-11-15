@@ -1,0 +1,33 @@
+.ticker-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background-color: #f1f1f1;
+    /*No me esta tomando el background*/
+    padding: 10px;
+}
+
+.ticker-content {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker-scroll 60s linear infinite normal;
+    /* background-color: #4B0082; */
+}
+
+.span-stock {
+    padding: 40px;
+}
+
+@keyframes ticker-scroll {
+    from {
+        transform: translateX(5%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+[data-bs-theme='dark'] .ticker-container {
+    background-color: #000;
+}
