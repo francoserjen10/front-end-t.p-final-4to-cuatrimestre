@@ -1,4 +1,4 @@
-export interface Cotizacion {
+export interface ICotizacion {
     id: number;
     fecha: string;
     hora: string;
