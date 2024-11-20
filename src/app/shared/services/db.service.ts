@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { error } from 'console';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 import { ICotizacion } from '../interfaces/cotizacion';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +13,9 @@ export class DbService {
 
   constructor(private http: HttpClient) { }
 
-  //Obtener las ultimas cotizaciones
-  getLastCotizaciones(): Observable<any> {
-    const cotizaciones = this.http.get<any>(`${this.apiUrl}/cotizaciones/last-cot`);
-    console.log('service db', cotizaciones)
+  //Obtener todas las cotizaciones
+  getAllCotizacionesOfBackEnd(codEmpresa: string): Observable<ICotizacion[]> {
+    const cotizaciones = this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-cotizaciones/${codEmpresa}`);
     return cotizaciones;
   }
 }
