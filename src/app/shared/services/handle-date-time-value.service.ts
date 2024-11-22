@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICotizacion } from '../interfaces/cotizacion';
-import { AreaData, Time, UTCTimestamp, WhitespaceData } from 'lightweight-charts';
+import { AreaData, Time, UTCTimestamp } from 'lightweight-charts';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +11,13 @@ export class HandleDateTimeValueService {
 
   transformDateAndTimeInTimestamp(cotizaciones: ICotizacion[]): AreaData<Time>[] {
     return cotizaciones.map((data) => {
-      const combinedDateTime = `${data.fecha}T${data.hora}:00Z`;
-      const timestamp: UTCTimestamp = (new Date(combinedDateTime).getTime() / 1000) as UTCTimestamp;
+      const dateTimeUtc = `${data.fecha}T${data.hora}Z`
+      const timestamp: UTCTimestamp = (Date.parse(dateTimeUtc) / 1000) as UTCTimestamp; // Convertir de milisegundos a segundos
+      const timestampOslo: UTCTimestamp = (timestamp + 3600) as UTCTimestamp;
       return {
-        time: timestamp,
+        time: timestampOslo,
         value: data.cotization
       };
     });
   }
-
 }
