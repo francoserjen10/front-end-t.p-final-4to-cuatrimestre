@@ -24,18 +24,14 @@ export class AppleIncComponent {
     this.getAndTransformLastCotizaciones();
   }
 
-  /**
-   * Obtengo ultimas cotizaciones de todas las empresas, 
-   * filtro por una,
-   * molde data para el grafico 
-   */
   getAndTransformLastCotizaciones() {
     return this.dbService.getAllCotizacionesOfBackEnd('AAPL').subscribe({
       next: (value: ICotizacion[]) => {
         const flatCotizaciones = value.flat();
+        const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(flatCotizaciones);
         this.cotizacionesChartData = [
           ...this.cotizacionesChartData,
-          ...this.handleDTV.transformDateAndTimeInTimestamp(flatCotizaciones)
+          ...dateTimeNoruega
         ];
       }, error(err) {
         console.error('Error al obtener las cotizaciones en el home', err)
