@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AreaData, createChart, ISeriesApi, Time } from 'lightweight-charts';
+import { ICotizacion } from '../interfaces/cotizacion';
+import { HandleDateTimeValueService } from '../services/handle-date-time-value.service';
 
 @Component({
   selector: 'app-candlestick-chart',
@@ -8,49 +10,77 @@ import { AreaData, createChart, ISeriesApi, Time } from 'lightweight-charts';
   templateUrl: './candlestick-chart.component.html',
   styleUrl: './candlestick-chart.component.css'
 })
-export class CandlestickChartComponent implements AfterViewInit, OnChanges {
+export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChanges {
 
-  @Input() data: AreaData<Time>[] = [];
+  @Input() data: ICotizacion[] = [];
+  allCotizacionesForHour: AreaData<Time>[] = [];
+  allCotizacionesForDay: AreaData<Time>[] = [];
+  allCotizacionesForMonth: AreaData<Time>[] = [];
   private areaSeries: ISeriesApi<'Area'> | null = null;
+  private chart: any = null;
 
-  constructor() { }
+  constructor(private handleDTV: HandleDateTimeValueService) { }
 
-  /*
-   * ngAfterViewInit: Ciclo de vida.
-   * se ejecuta después de que la vista del componente ha sido renderizada completamente
-   * if (typeof window !== 'undefined' && typeof document !== 'undefined'): asegura que el código solo se ejecute si estamos en un entorno de navegador
-   */
+  ngOnInit(): void {
+    this.data;
+    console.log("this.data", this.data)
+    this.transformCotizacionesForHours();
+    this.transformCotizacionesForDay()
+    this.transformCotizacionesForMonth();
+  }
+
   ngAfterViewInit(): void {
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       this.createCandlestickChart();
     }
   }
 
-  /*
-   * ciclo de vida de Angular que se ejecuta cada vez que cambian los valores de las propiedades de entrada (@Input) del componente
-   * @param changes Verifica si hubo un cambio en la propiedad de entrada data.
-   * @param this.chart Comprueba que el gráfico ya ha sido creado antes de intentar actualizarlo.
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] && this.areaSeries) {
-      //actualizar data del chart
-      const newData = changes['data'].currentValue;
-      if (newData && newData.length) {
-        const orderedData = newData.sort((a: { time: any; }, b: { time: any; }) => {
-          const timeA = typeof a.time === 'number' ? a.time : Number(a.time);
-          const timeB = typeof b.time === 'number' ? b.time : Number(b.time);
-          return timeA - timeB;
-        });
-        const dataWithoutDuplicates = orderedData.filter((item: { time: any; }, index: number, array: { time: any; }[]) => {
-          return index === 0 || item.time !== array[index - 1].time;
-        });
-        dataWithoutDuplicates.forEach((datas: AreaData<Time>) => {
-          // Asegurarme de que this.areaSeries no sea nulo => !
-          this.areaSeries!.update(datas);
-        });
-      }
-    }
-  }
+   ngOnChanges(changes: SimpleChanges): void {
+     if (this.chart) {
+       if(this.areaSeries) {
+       this.chart.update!([
+         this.transformCotizacionesForHours(),
+         this.transformCotizacionesForDay(),
+         this.transformCotizacionesForMonth()
+       ])
+     }}
+   }
+
+
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['data'] && this.areaSeries) {
+  //     //  actualizar data del chart
+  //     const newData = changes['data'].currentValue;
+  //     console.log('newData', nre)
+  //     if (newData && newData.length) {
+  //       const orderedData = newData.sort((a: { time: any; }, b: { time: any; }) => {
+  //         const timeA = typeof a.time === 'number' ? a.time : Number(a.time);
+  //         const timeB = typeof b.time === 'number' ? b.time : Number(b.time);
+  //         return timeA - timeB;
+  //       });
+
+  //       // Eliminar duplicados por la propiedad 'time'
+  //       const dataWithoutDuplicates = orderedData.filter((item: { time: any; }, index: number, array: { time: any; }[]) => {
+  //         return index === 0 || item.time !== array[index - 1].time;
+  //       });
+  //       dataWithoutDuplicates.forEach((datas: AreaData<Time>) => {
+  //         // Asegurarme de que this.areaSeries no sea nulo => !
+  //         this.areaSeries!.update(datas);
+  //       });
+  //     }
+  //   }
+  // }
+
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['data'] && this.areaSeries) {
+  //     //  actualizar data del chart
+  //     const newData = changes['data'].currentValue;
+  //     console.log('newData', newData)
+  //     if (newData && newData.length) {
+  //       this.allCotizacionesForDay(newData)
+  //     }
+  //   }
+  // }
 
   // Crear un Chart
   createCandlestickChart() {
@@ -69,16 +99,45 @@ export class CandlestickChartComponent implements AfterViewInit, OnChanges {
         height: containerChart.clientHeight,
       });
 
-      this.areaSeries = chart.addAreaSeries()
-      const orderedData = this.data.sort((a, b) => {
-        const timeA = typeof a.time === 'number' ? a.time : Number(a.time);
-        const timeB = typeof b.time === 'number' ? b.time : Number(b.time);
-        return timeA - timeB;
+      const seriesesData = new Map([
+        ['1H', this.allCotizacionesForHour],
+        ['1D', this.allCotizacionesForDay],
+        ['1M', this.allCotizacionesForMonth]
+      ]);
+      console.log(seriesesData)
+      const intervalColors: { [key: string]: string } = {
+        '1H': '#2962FF',
+        '1D': 'rgb(225, 87, 90)',
+        '1M': 'rgb(242, 142, 44)',
+      };
+      const lineSeries = chart.addLineSeries({ color: intervalColors['1H'] });
+
+      function setChartInterval(interval: string) {
+        const data = seriesesData.get(interval) ?? [];
+        lineSeries.setData(data);
+        lineSeries.applyOptions({
+          color: intervalColors[interval],
+        });
+        chart.timeScale().applyOptions({
+          timeVisible: interval === '1H',
+          rightOffset: interval === '1H' ? 10 : 20,
+          barSpacing: interval === '1H' ? 5 : 10,
+        })
+        chart.timeScale().fitContent();
+      }
+      setChartInterval('1H');
+
+      const intervals = ['1H', '1D', '1M'];
+      const buttonsContainer = document.createElement('div');
+
+      intervals.forEach(interval => {
+        const button = document.createElement('button');
+        button.innerText = interval;
+        button.addEventListener('click', () => setChartInterval(interval));
+        buttonsContainer.appendChild(button);
       });
-      const dataWithoutDuplicates = orderedData.filter((item, index, array) => {
-        return index === 0 || item.time !== array[index - 1].time;
-      });
-      this.areaSeries.setData(dataWithoutDuplicates);
+      containerChart.appendChild(buttonsContainer);
+
       chart.timeScale().applyOptions({
         borderColor: '#71649C',
         timeVisible: true,
@@ -87,7 +146,6 @@ export class CandlestickChartComponent implements AfterViewInit, OnChanges {
         minBarSpacing: 0,
         fixLeftEdge: true,
       });
-      // Manejo del tamaño del grafico dinamicamente
       const resizeChart = () => {
         chart.applyOptions({
           width: containerChart.clientWidth,
@@ -95,18 +153,47 @@ export class CandlestickChartComponent implements AfterViewInit, OnChanges {
         });
       }
       window.addEventListener("resize", resizeChart)
-      // Settear la moneda deseada
       const currentLocale = 'nb-NO';
       const myPriceFormatter = Intl.NumberFormat(currentLocale, {
         style: 'currency',
         currency: 'NOK'
       }).format;
-      // Aplicar el formateador de precios personalizado al gráfico.
       chart.applyOptions({
         localization: {
           priceFormatter: myPriceFormatter,
         },
       });
     }
+  }
+
+  transformCotizacionesForHours() {
+    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.data);
+    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForHours);
+    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
+    this.allCotizacionesForHour = sortedData.filter((item, index, array) => {
+      return index === 0 || item.time !== array[index - 1].time;
+    });
+  }
+
+  transformCotizacionesForDay() {
+    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.data);
+    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
+    console.log("cotsForDays", cotsForDays)
+    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForDays);
+    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
+    this.allCotizacionesForDay = sortedData.filter((item, index, array) => {
+      return index === 0 || item.time !== array[index - 1].time;
+    });
+  }
+
+  transformCotizacionesForMonth() {
+    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.data);
+    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
+    const cotsForMonths: ICotizacion[] = this.handleDTV.filterByMonths(cotsForDays);
+    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForMonths);
+    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
+    this.allCotizacionesForMonth = sortedData.filter((item, index, array) => {
+      return index === 0 || item.time !== array[index - 1].time;
+    });
   }
 }
