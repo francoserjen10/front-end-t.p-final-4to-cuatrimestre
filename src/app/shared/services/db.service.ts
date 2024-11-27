@@ -15,7 +15,6 @@ export class DbService {
 
   //Obtener todas las cotizaciones
   getAllCotizacionesOfBackEnd(codEmpresa: string): Observable<ICotizacion[]> {
-    const cotizaciones = this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-cotizaciones/${codEmpresa}`);
-    return cotizaciones;
+    return this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-cotizaciones/${codEmpresa}`);
   }
 }
