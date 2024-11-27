@@ -10,7 +10,7 @@ import { DarkModeService } from '../../../shared/services/dark-mode.service';
 })
 export class NavBarComponent {
 
-  darkModeService = inject(DarkModeService)
+  darkModeService = inject(DarkModeService);
 
   constructor() { }
 

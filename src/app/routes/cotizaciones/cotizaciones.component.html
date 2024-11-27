@@ -1,6 +1,6 @@
 <div class="content-bag" [attr.data-bs-theme]="darkModeService.darkModeSignal()">
     <div class="title">
-        <h2>Visa Inc. (V)</h2>
+        <h2>{{companyId}}</h2>
     </div>
     <div class="content-variability">
         <h1>1358.90</h1>
@@ -9,5 +9,8 @@
     <div class="open-close-bag">
         <i class="bi bi-clock"></i>
         <p>Mercado cerrado</p>
+    </div>
+    <div class="container-chart">
+        <app-candlestick-chart [data]="cotizacionesChartData"></app-candlestick-chart>
     </div>
 </div>

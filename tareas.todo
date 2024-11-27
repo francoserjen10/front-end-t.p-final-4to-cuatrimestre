@@ -1,0 +1,268 @@
+Indices bursatiles:
+    - Mostrar en el grafico los indices por: 
+        - por hora
+        - por dia
+        - por mes
+        - por anio
+
+Cotizaciones en el grafico:
+    ✔ Ordenar codigo del grafico @done(24-11-20 21:03)
+    ✔ Crear servicio (shared) para convertir fecha y hora en un timestamp y crear objeto con el valor de la cotizacion @done(24-11-20 18:29)
+    Agregarle zona horaria de noruega (Esperar a que jose me de el okey de la estrategia propuesta => sumarte 3600 segundos al timestamp para que me de el horario de noruega)
+    ✔ Mostrar en el grafico solamente las cotizaciones en el horario de la bolsa @started(24-11-22 11:24) @done(24-11-22 12:52) @lasted(1h28m47s)
+    - Aplicarle boton de dia
+    - Aplicarle boton de mes 
+    - Que las empresas sean manejadas a travez de parametros en la url para poder usar el mismo grafico en distintas empresas con distintas infos
+
+mockList:
+    - Crear un mock list de las empresas para automatizar mas => 'AAPL', 'TSLA', 'JPM', 'ROG.SW', 'SHEL', 'V', 'WMT'
+
+Cotizaciones: 
+    ✔ Crear interfaz @done(24-11-19 14:37)
+    ✔ Traerme las ultimas cotizaciones de cada empresa @done(24-11-19 14:37)
+    ✔ Filtrar cotizacion por empresa para mostrar cada cotizacion correspongiente con su empresa en su grafica (En cada componente) @done(24-11-19 14:37)
+    - Agregarle +1 hora (noruega)
+
+Conexiones back-end:
+    ✔ Crear archivos y carpetas para la coxexion con la base de datos @done(24-11-19 14:37)
+    ✔ Conectarme a travez del HttpModule de angular @done(24-11-19 14:37)
+    - Manejar errores de conexion
+    ✔ Introducir variables de entorno @done(24-11-19 14:37)
+    // Crear carpeta service(raiz), 
+        // - crear todas las conexiones a los inputs y retornar los valores
+        // - Que los demas componentes llamen a este servicio cuando quieran.
+
+Ticker de bolsa:
+    ✔ Crear componente @done(24-11-07 13:29)
+    ✔ Mockear datos @done(24-11-07 13:41)
+    ✔ Crear estructura (html) @done(24-11-07 13:50)
+    ✔ Darle estilo para que se mueva de lado a lado @done(24-11-08 12:41)
+    ✔ Insertar componente en el app.component.html @done(24-11-07 13:50)
+    - Agregarle in loguito a casa emrpresa para que quede mas lindo
+
+Grafico de vela:
+    ✔ Crear grafico. @done(24-11-01 21:24)
+    ✔ Acomodar dark mode de la pagina en si porque se rompe cuando aparece el grafico. @done(24-11-01 19:57)
+    ✔ Aplicarle el tamaño necesario. @started(24-11-01 12:31) @done(24-11-01 21:24) @lasted(8h53m27s)
+    - Centrar el grafico en el medio de la pagina 
+
+Idioma:
+    - Aplicar boton de cambio de idioma al navbar @started(24-11-04 19:33)
+    - El idioma es Noruego
+    - Aplicarle dark mode
+        https://www.youtube.com/watch?v=29QZnvu985s&ab_channel=AlonsoNava
+
+Logo: 
+    - Crear nombre de mi pagina 
+        BORSLY, BORSEN
+        Fuente => Serif Libre Baskerville
+        width: 250px;
+        height: 80px;
+        
+    - Crear logo de mi pagina
+
+NavBar:
+    ✔ Modificar el color del boton de light mode para que se ponga blanco @done(24-10-25 20:16)
+SideBar:
+    ✔ Acomodar background de sidebar para que quede acorde al dark mode. @done(24-10-16 11:17)
+    ✘ Acomodar color de border de .rounded-list para que quede acorde al dark mode. @cancelled(24-10-19 22:59)
+    ✔ Agrandar el width para que quede mejor en el home y demas paginas @done(24-10-18 13:23)
+    ✔ Eliminar borde @done(24-10-18 13:23)
+
+    Home
+content-bag:
+    ✔ Aplicarle cambio de color al contenido dependiendo del modo de navegación (dark mode/ light mode) @started(24-10-22 15:27) @done(24-10-22 15:47) @lasted(20m14s)
+Layout: 
+    - Cambiar color del valor de la variabilidad a verde si sube el valor
+    - Cambiar color del valor de la variabilidad a rojo si baja el valor
+    ✔ Hacer que cuando se achique la pantalla el valor de la variabilidad (el valor de subida y bajada del mercado en verde o rojo), se coloque debajo del precio valor de la bolsa @done(24-10-18 18:44)
+open-close-bag:
+    - Darle funcionalidad al parrafo de mercado cerrado o abierto dependiendo del horario que estemos manejando
+    - Cambiar el color a verde del reloj cuando el mercado este abierto
+    - Cambiar el color a rojo del reloj cuando el mercado este cerrado
+    - Se puede aplicar "transition: color 0.3s ease"
+
+✘ Contenedor de toda la pagina: @cancelled(24-10-25 20:18)
+    ✘ Arreglar debajo del sideBar, donde termina, queda el color blanco de la pagina. @cancelled(24-10-25 20:18)
+        ✘ * opcion 1: @cancelled(24-10-25 20:18)
+            ✘ Hacer el sideBar flotante y que a medida que se hace scroll en la pagina, el mismo te siga. @cancelled(24-10-25 20:18)
+        ✘ * opcion 2: @cancelled(24-10-25 20:18)
+            ✘ Poner el estilo "bg-body-tertiary" en el contenedor raiz de la app @cancelled(24-10-25 20:18)
+
+Rutoe de las paginas:
+    ✔ Crear redireccionamiento de manera automatica para cuando se cargue la pagina con redirectTo y pathMatch para Home @started(24-10-25 11:36) @done(24-10-25 11:37) @lasted(1m3s)
+    ✔ Crear componente de Apple Inc. @done(24-10-25 11:41)
+    ✔ Crear Ruteo de Apple Inc. @done(24-10-25 11:41)
+    ✔ Crear componente de Tesla Inc. @done(24-10-25 11:43)
+    ✔ Crear Ruteo de Tesla Inc. @done(24-10-25 11:45)
+    ✔ Crear componente de JPMorgan Chase & Co. @done(24-10-25 11:49)
+    ✔ Crear Ruteo de JPMorgan Chase & Co. @done(24-10-25 11:58)
+    ✔ Crear componente de Roche Holding AG. @done(24-10-25 11:58)
+    ✔ Crear Ruteo de Roche Holding AG. @done(24-10-25 11:58)
+    ✔ Crear componente de Shell PLC. @done(24-10-25 11:58)
+    ✔ Crear Ruteo de Shell PLC. @done(24-10-25 12:06)
+    ✔ Crear componente de Visa Inc. @done(24-10-25 12:06)
+    ✔ Crear Ruteo de Visa Inc. @done(24-10-25 12:06)
+    ✔ Crear componente de Walmart Inc. @done(24-10-25 12:06)
+    ✔ Crear Ruteo de Walmart Inc. @done(24-10-25 12:06)
+
+Fijar componentes:
+    ✔ Fijar navbar en archivo raiz para que se muestre por defecto en todas las paginas @done(24-10-25 20:18)
+    ✔ Fijar sidebar en archivo raiz para que se muestre por defecto en todas las paginas @started(24-10-25 12:17) @done(24-10-25 20:18) @lasted(8h1m4s)
+
+Componente de las empresas:
+    ✔ Ubicar el titulo de las empresas de la misma manera que el del home (Oslo). @done(24-10-25 20:55)
+    ✔ Poner el precio de la bolsa de la empresa con el porcentaje de subida o bajada igual que la de home. @done(24-10-25 20:56)
+    ✔ Aviso si esta abierto o cerrado el mercado en las paginas de las empresas al igual que esta en el home. @done(24-10-25 20:56)
+    ✔ Aplicar dark mode a cada uno. @done(24-10-25 20:56)
+
+Arquitectura del proyecto:
+    src/
+    │
+    ├── app/
+-    │   ├── core/                     --> Navbar y Sidebar
+    │   │   ├── components/
+    │   │   │   ├── nav-bar/
+    │   │   │   │   ├── nav-bar.component.ts
+    │   │   │   │   ├── nav-bar.component.html
+    │   │   │   │   └── nav-bar.component.css
+    │   │   │   ├── side-bar/
+    │   │   │   │   ├── side-bar.component.ts
+    │   │   │   │   ├── side-bar.component.html
+    │   │   │   │   └── side-bar.component.css
+    │   │   └── index.ts               --> Exporta los componentes del core
+    │
+-    │   ├── routes/                    --> Rutas principales
+    │   │   ├── home/                  --> Página principal (tu carpeta actual)
+    │   │   │   ├── home.component.ts
+    │   │   │   ├── home.component.html
+    │   │   │   └── home.component.css
+    │   │   ├── company-1/             --> Página para empresa 1
+    │   │   │   ├── company1.component.ts
+    │   │   │   ├── company1.component.html
+    │   │   │   └── company1.component.css
+    │   │   └── ... (6 más)
+    │
+    │   ├── shared/                    --> Servicios y componentes reutilizables
+    │   │   ├── services/
+    │   │   │   ├── darkmode.service.ts
+    │   │   │   ├── stock.service.ts
+    │   │   │   └── index.ts
+    │   │   ├── candlestick-chart/
+    │   │   │   ├── candlestick-chart.component.ts
+    │   │   │   ├── candlestick-chart.component.html
+    │   │   │   └── candlestick-chart.component.css
+    │   │   └── index.ts               --> Exporta los componentes compartidos
+    │
+    │   ├── app.routes.ts              --> Configuración de rutas
+    │   └── app.component.ts           --> Componente raíz
+    │
+    ├── assets/                        --> Imágenes y recursos
+    │
+    ├── environments/                  --> Configuración de entornos
+    │   ├── environment.ts
+    │   └── environment.prod.ts
+    │
+    └── main.ts                        --> Punto de entrada
+
+- Participaciones: 
+    - Cantidad de axiones de empresa por ultimo valor de cotizacion / cantidad total de acciones(Cuantas acciones tiene toda la empresa) ()
+
+
+    -----------------------------------------------------------------------------------------------------------------------
+    import { Component, inject } from '@angular/core';
+import { DarkModeService } from '../../shared/services/dark-mode.service';
+import { CandlestickChartComponent } from '../../shared/candlestick-chart/candlestick-chart.component';
+import { AreaData, Time } from 'lightweight-charts';
+import { DbService } from '../../shared/services/db.service';
+import { HandleDateTimeValueService } from '../../shared/services/handle-date-time-value.service';
+import { ICotizacion } from '../../shared/interfaces/cotizacion';
+
+@Component({
+  selector: 'app-apple-inc',
+  standalone: true,
+  imports: [CandlestickChartComponent],
+  templateUrl: './apple-inc.component.html',
+  styleUrl: './apple-inc.component.css'
+})
+export class AppleIncComponent {
+
+  darkModeService = inject(DarkModeService)
+  cotizacionesChartData: AreaData<Time>[] = [];
+
+  constructor(private dbService: DbService, private handleDTV: HandleDateTimeValueService) { }
+
+  ngOnInit(): void {
+    this.getAndTransformLastCotizaciones();
+  }
+
+  /**
+   * Obtengo ultimas cotizaciones de todas las empresas, 
+   * filtro por una,
+   * molde data para el grafico 
+   */
+  getAndTransformLastCotizaciones() {
+    return this.dbService.getAllCotizacionesOfBackEnd('AAPL').subscribe({
+      next: (value: ICotizacion[]) => {
+        const flatCotizaciones = value.flat();
+        // console.log("flatCotizaciones", flatCotizaciones);
+        const dateTimeNoruega = this.handleDTV.transformUTCInTimeNoruega(flatCotizaciones);
+        // console.log("dateTimeNoruega", dateTimeNoruega);
+        this.cotizacionesChartData = [
+          ...this.cotizacionesChartData,
+          ...dateTimeNoruega
+        ];
+      }, error(err) {
+        console.error('Error al obtener las cotizaciones en el home', err)
+      },
+    });
+  }
+}
+------------------
+import { Injectable } from '@angular/core';
+import moment from 'moment-timezone';
+import { ICotizacion } from '../interfaces/cotizacion';
+import { AreaData, Time, UTCTimestamp } from 'lightweight-charts';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HandleDateTimeValueService {
+
+  constructor() { }
+
+  // Le llegan las cotizaciones
+  transformUTCInTimeNoruega(cotizaciones: ICotizacion[]) {
+    const allCotizacionesNoruega: ICotizacion[] = cotizaciones.map((data) => {
+      const utcDateTime = `${data.fecha}T${data.hora}Z`;
+      // console.log("utcDateTime", utcDateTime)
+      const formattedDate = moment(utcDateTime).tz('Europe/Oslo', false).format()
+      // console.log("formattedDate", formattedDate);
+      return {
+        ...data,
+        formattedDate
+      };
+    });
+    console.log("allCotizacionesNoruega", allCotizacionesNoruega);
+    return this.transformDateAndTimeInTimestamp(allCotizacionesNoruega)
+  }
+
+  transformDateAndTimeInTimestamp(cotizaciones: ICotizacion[]): AreaData<Time>[] {
+    return cotizaciones.map((data) => {
+      // console.log("timestamp data", data)
+      if (!data.formattedDate) {
+        throw new Error(`formattedDate no está definido para la cotización con id ${data.id}`)
+      }
+      // const timestamp: UTCTimestamp = (new Date(data.formattedDate).getTime() / 1000) as UTCTimestamp;
+      console.log("data.formattedDate", data.formattedDate);
+      const timestamp: UTCTimestamp = moment(data.formattedDate).tz('Europe/Oslo', false).valueOf() as UTCTimestamp;
+
+      console.log("timestamp noruega", timestamp);
+      return {
+        time: timestamp,
+        value: data.cotization
+      };
+    });
+  }
+
+}
