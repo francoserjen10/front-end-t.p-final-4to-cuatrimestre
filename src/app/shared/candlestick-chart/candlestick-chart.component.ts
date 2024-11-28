@@ -11,45 +11,44 @@ import { Subject } from 'rxjs';
 })
 export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChanges {
 
-  @Input() forHour: AreaData<Time>[] = [];
   @Input() forDay: AreaData<Time>[] = [];
   @Input() forMonth: AreaData<Time>[] = [];
+  @Input() forYear: AreaData<Time>[] = [];
 
-  private currentInterval: string = '1H'; // Intervalo seleccionado actualmente
+  private currentInterval: string = '1D'; // Intervalo seleccionado actualmente
   private seriesesData = new Map<string, AreaData<Time>[]>(); // Datos por intervalo
   private lineSeries: ISeriesApi<'Line'> | null = null; // Referencia a la serie de líneas
   private chart: any = null; // Referencia al gráfico
-  private dataSubject = new Subject<{ forHour: any; forDay: any; forMonth: any }>();
+  private dataSubject = new Subject<{ forDay: any; forMonth: any; forYear: any }>();
   constructor() { }
 
   ngOnInit(): void {
-    // Inicializa los datos en seriesesData
-    this.seriesesData.set('1H', this.forHour || []);
     this.seriesesData.set('1D', this.forDay || []);
     this.seriesesData.set('1M', this.forMonth || []);
+    this.seriesesData.set('1A', this.forYear || []);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['forHour'] || changes['forDay'] || changes['forMonth']) {
       // Emite los datos al Subject cuando estén disponibles
       this.dataSubject.next({
-        forHour: this.forHour,
         forDay: this.forDay,
         forMonth: this.forMonth,
+        forYear: this.forYear,
       });
     }
   }
 
   ngAfterViewInit(): void {
     this.dataSubject.subscribe((data) => {
-      if (data.forHour && data.forDay && data.forMonth) {
+      if (data.forDay && data.forMonth && data.forYear) {
         // Solo crea el gráfico cuando todos los datos están disponibles
         if (!this.chart) {
           this.createCandlestickChart();
         }
-        this.updateChartData('1H', data.forHour);
         this.updateChartData('1D', data.forDay);
         this.updateChartData('1M', data.forMonth);
+        this.updateChartData('1A', data.forYear);
       }
     });
   }
@@ -60,7 +59,6 @@ export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChang
       this.lineSeries.setData(data);
     }
   }
-  // Crear un Chart
   createCandlestickChart() {
     const containerChart = document.getElementById('container-chart');
     if (containerChart) {
@@ -72,13 +70,12 @@ export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChang
       });
 
       const intervalColors: { [key: string]: string } = {
-        '1H': '#2962FF',
-        '1D': 'rgb(225, 87, 90)',
-        '1M': 'rgb(242, 142, 44)',
+        '1D': '#2962FF',
+        '1M': 'rgb(225, 87, 90)',
+        '1A': 'rgb(242, 142, 44)',
       };
 
-      this.lineSeries = this.chart.addLineSeries({ color: intervalColors['1H'] });
-
+      this.lineSeries = this.chart.addLineSeries({ color: intervalColors['1D'] });
 
       const setChartInterval = (interval: string) => {
         this.currentInterval = interval;
@@ -86,16 +83,16 @@ export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChang
         this.lineSeries!.setData(data);
         this.lineSeries!.applyOptions({ color: intervalColors[interval] });
         this.chart.timeScale().applyOptions({
-          timeVisible: interval === '1H',
-          rightOffset: interval === '1H' ? 10 : 20,
-          barSpacing: interval === '1H' ? 5 : 10,
+          timeVisible: interval === '1D',
+          rightOffset: interval === '1D' ? 10 : 20,
+          barSpacing: interval === '1D' ? 5 : 10,
         })
         this.chart.timeScale().fitContent();
       }
 
-      setChartInterval('1H');
+      setChartInterval('1D');
 
-      const intervals = ['1H', '1D', '1M'];
+      const intervals = ['1D', '1M', '1A'];
       const buttonsContainer = document.createElement('div');
       buttonsContainer.style.display = 'flex';
       buttonsContainer.style.gap = '10px';
