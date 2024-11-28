@@ -11,6 +11,7 @@
         <p>Mercado cerrado</p>
     </div>
     <div class="container-chart">
-        <app-candlestick-chart [data]="cotizacionesChartData"></app-candlestick-chart>
+        <app-candlestick-chart [forHour]="cotChartDataFoyHour" [forDay]="cotChartDataFoyDay"
+            [forMonth]="cotChartDataFoyMonth"></app-candlestick-chart>
     </div>
 </div>
