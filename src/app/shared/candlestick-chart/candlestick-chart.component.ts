@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AreaData, createChart, ISeriesApi, Time } from 'lightweight-charts';
-import { ICotizacion } from '../interfaces/cotizacion';
-import { HandleDateTimeValueService } from '../services/handle-date-time-value.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-candlestick-chart',
@@ -12,133 +11,105 @@ import { HandleDateTimeValueService } from '../services/handle-date-time-value.s
 })
 export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChanges {
 
-  @Input() data: ICotizacion[] = [];
-  allCotizacionesForHour: AreaData<Time>[] = [];
-  allCotizacionesForDay: AreaData<Time>[] = [];
-  allCotizacionesForMonth: AreaData<Time>[] = [];
-  private areaSeries: ISeriesApi<'Area'> | null = null;
-  private chart: any = null;
+  @Input() forHour: AreaData<Time>[] = [];
+  @Input() forDay: AreaData<Time>[] = [];
+  @Input() forMonth: AreaData<Time>[] = [];
 
-  constructor(private handleDTV: HandleDateTimeValueService) { }
+  private currentInterval: string = '1H'; // Intervalo seleccionado actualmente
+  private seriesesData = new Map<string, AreaData<Time>[]>(); // Datos por intervalo
+  private lineSeries: ISeriesApi<'Line'> | null = null; // Referencia a la serie de líneas
+  private chart: any = null; // Referencia al gráfico
+  private dataSubject = new Subject<{ forHour: any; forDay: any; forMonth: any }>();
+  constructor() { }
 
   ngOnInit(): void {
-    this.data;
-    console.log("this.data", this.data)
-    this.transformCotizacionesForHours();
-    this.transformCotizacionesForDay()
-    this.transformCotizacionesForMonth();
+    // Inicializa los datos en seriesesData
+    this.seriesesData.set('1H', this.forHour || []);
+    this.seriesesData.set('1D', this.forDay || []);
+    this.seriesesData.set('1M', this.forMonth || []);
   }
 
-  ngAfterViewInit(): void {
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      this.createCandlestickChart();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['forHour'] || changes['forDay'] || changes['forMonth']) {
+      // Emite los datos al Subject cuando estén disponibles
+      this.dataSubject.next({
+        forHour: this.forHour,
+        forDay: this.forDay,
+        forMonth: this.forMonth,
+      });
     }
   }
 
-   ngOnChanges(changes: SimpleChanges): void {
-     if (this.chart) {
-       if(this.areaSeries) {
-       this.chart.update!([
-         this.transformCotizacionesForHours(),
-         this.transformCotizacionesForDay(),
-         this.transformCotizacionesForMonth()
-       ])
-     }}
-   }
+  ngAfterViewInit(): void {
+    this.dataSubject.subscribe((data) => {
+      if (data.forHour && data.forDay && data.forMonth) {
+        // Solo crea el gráfico cuando todos los datos están disponibles
+        if (!this.chart) {
+          this.createCandlestickChart();
+        }
+        this.updateChartData('1H', data.forHour);
+        this.updateChartData('1D', data.forDay);
+        this.updateChartData('1M', data.forMonth);
+      }
+    });
+  }
 
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['data'] && this.areaSeries) {
-  //     //  actualizar data del chart
-  //     const newData = changes['data'].currentValue;
-  //     console.log('newData', nre)
-  //     if (newData && newData.length) {
-  //       const orderedData = newData.sort((a: { time: any; }, b: { time: any; }) => {
-  //         const timeA = typeof a.time === 'number' ? a.time : Number(a.time);
-  //         const timeB = typeof b.time === 'number' ? b.time : Number(b.time);
-  //         return timeA - timeB;
-  //       });
-
-  //       // Eliminar duplicados por la propiedad 'time'
-  //       const dataWithoutDuplicates = orderedData.filter((item: { time: any; }, index: number, array: { time: any; }[]) => {
-  //         return index === 0 || item.time !== array[index - 1].time;
-  //       });
-  //       dataWithoutDuplicates.forEach((datas: AreaData<Time>) => {
-  //         // Asegurarme de que this.areaSeries no sea nulo => !
-  //         this.areaSeries!.update(datas);
-  //       });
-  //     }
-  //   }
-  // }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['data'] && this.areaSeries) {
-  //     //  actualizar data del chart
-  //     const newData = changes['data'].currentValue;
-  //     console.log('newData', newData)
-  //     if (newData && newData.length) {
-  //       this.allCotizacionesForDay(newData)
-  //     }
-  //   }
-  // }
-
+  private updateChartData(interval: string, data: AreaData<Time>[]): void {
+    this.seriesesData.set(interval, data);
+    if (this.lineSeries && this.currentInterval === interval) {
+      this.lineSeries.setData(data);
+    }
+  }
   // Crear un Chart
   createCandlestickChart() {
     const containerChart = document.getElementById('container-chart');
     if (containerChart) {
-      const chart = createChart(containerChart, {
-        layout: {
-          background: { color: "#222" },
-          textColor: "#DDD"
-        },
-        grid: {
-          vertLines: { color: "#444" },
-          horzLines: { color: "#444" },
-        },
+      this.chart = createChart(containerChart, {
+        layout: { background: { color: "#222" }, textColor: "#DDD" },
+        grid: { vertLines: { color: "#444" }, horzLines: { color: "#444" }, },
         width: containerChart.clientWidth,
         height: containerChart.clientHeight,
       });
 
-      const seriesesData = new Map([
-        ['1H', this.allCotizacionesForHour],
-        ['1D', this.allCotizacionesForDay],
-        ['1M', this.allCotizacionesForMonth]
-      ]);
-      console.log(seriesesData)
       const intervalColors: { [key: string]: string } = {
         '1H': '#2962FF',
         '1D': 'rgb(225, 87, 90)',
         '1M': 'rgb(242, 142, 44)',
       };
-      const lineSeries = chart.addLineSeries({ color: intervalColors['1H'] });
 
-      function setChartInterval(interval: string) {
-        const data = seriesesData.get(interval) ?? [];
-        lineSeries.setData(data);
-        lineSeries.applyOptions({
-          color: intervalColors[interval],
-        });
-        chart.timeScale().applyOptions({
+      this.lineSeries = this.chart.addLineSeries({ color: intervalColors['1H'] });
+
+
+      const setChartInterval = (interval: string) => {
+        this.currentInterval = interval;
+        const data = this.seriesesData.get(interval) || []; // ??
+        this.lineSeries!.setData(data);
+        this.lineSeries!.applyOptions({ color: intervalColors[interval] });
+        this.chart.timeScale().applyOptions({
           timeVisible: interval === '1H',
           rightOffset: interval === '1H' ? 10 : 20,
           barSpacing: interval === '1H' ? 5 : 10,
         })
-        chart.timeScale().fitContent();
+        this.chart.timeScale().fitContent();
       }
+
       setChartInterval('1H');
 
       const intervals = ['1H', '1D', '1M'];
       const buttonsContainer = document.createElement('div');
+      buttonsContainer.style.display = 'flex';
+      buttonsContainer.style.gap = '10px';
 
-      intervals.forEach(interval => {
+      intervals.forEach((interval) => {
         const button = document.createElement('button');
         button.innerText = interval;
         button.addEventListener('click', () => setChartInterval(interval));
         buttonsContainer.appendChild(button);
       });
+
       containerChart.appendChild(buttonsContainer);
 
-      chart.timeScale().applyOptions({
+      this.chart.timeScale().applyOptions({
         borderColor: '#71649C',
         timeVisible: true,
         rightOffset: 20,
@@ -147,53 +118,22 @@ export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChang
         fixLeftEdge: true,
       });
       const resizeChart = () => {
-        chart.applyOptions({
+        this.chart.applyOptions({
           width: containerChart.clientWidth,
           height: containerChart.clientHeight
         });
       }
-      window.addEventListener("resize", resizeChart)
+      window.addEventListener("resize", resizeChart);
       const currentLocale = 'nb-NO';
       const myPriceFormatter = Intl.NumberFormat(currentLocale, {
         style: 'currency',
         currency: 'NOK'
-      }).format;
-      chart.applyOptions({
+      }).format
+      this.chart.applyOptions({
         localization: {
           priceFormatter: myPriceFormatter,
         },
       });
     }
-  }
-
-  transformCotizacionesForHours() {
-    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.data);
-    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForHours);
-    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
-    this.allCotizacionesForHour = sortedData.filter((item, index, array) => {
-      return index === 0 || item.time !== array[index - 1].time;
-    });
-  }
-
-  transformCotizacionesForDay() {
-    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.data);
-    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
-    console.log("cotsForDays", cotsForDays)
-    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForDays);
-    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
-    this.allCotizacionesForDay = sortedData.filter((item, index, array) => {
-      return index === 0 || item.time !== array[index - 1].time;
-    });
-  }
-
-  transformCotizacionesForMonth() {
-    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.data);
-    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
-    const cotsForMonths: ICotizacion[] = this.handleDTV.filterByMonths(cotsForDays);
-    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForMonths);
-    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
-    this.allCotizacionesForMonth = sortedData.filter((item, index, array) => {
-      return index === 0 || item.time !== array[index - 1].time;
-    });
   }
 }

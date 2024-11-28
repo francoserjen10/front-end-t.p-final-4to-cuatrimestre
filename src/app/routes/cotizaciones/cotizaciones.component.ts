@@ -5,6 +5,8 @@ import { ICotizacion } from '../../shared/interfaces/cotizacion';
 import { DbService } from '../../shared/services/db.service';
 import { CandlestickChartComponent } from '../../shared/candlestick-chart/candlestick-chart.component';
 import { FormsModule } from '@angular/forms';
+import { HandleDateTimeValueService } from '../../shared/services/handle-date-time-value.service';
+import { AreaData, Time } from 'lightweight-charts';
 
 @Component({
   selector: 'app-cotizaciones',
@@ -16,15 +18,17 @@ import { FormsModule } from '@angular/forms';
 export class CotizacionesComponent implements OnInit {
 
   darkModeService = inject(DarkModeService);
-  originalsCotizaciones: ICotizacion[] = [];
-  cotizacionesChartData: ICotizacion[] = [];
-  selectedOption: string = '';
-  private cotizacionesSubscription: any;
   companyId: string | null = '';
+  originalsCotizaciones: ICotizacion[] = [];
+  cotChartDataFoyHour: AreaData<Time>[] = [];
+  cotChartDataFoyDay: AreaData<Time>[] = [];
+  cotChartDataFoyMonth: AreaData<Time>[] = [];
+  isDataLoaded: boolean = false; // Estado para controlar la carga de datos
 
   constructor(
     private route: ActivatedRoute,
-    private dbService: DbService
+    private dbService: DbService,
+    private handleDTV: HandleDateTimeValueService
   ) { }
 
   ngOnInit(): void {
@@ -36,12 +40,15 @@ export class CotizacionesComponent implements OnInit {
 
   getAllCotizaciones() {
     if (this.companyId) {
-      this.cotizacionesSubscription = this.dbService.getAllCotizacionesOfBackEnd(this.companyId)
+      this.dbService.getAllCotizacionesOfBackEnd(this.companyId)
         .subscribe({
           next: (value: ICotizacion[]) => {
             const flatCotizaciones = value.flat();
             this.originalsCotizaciones = flatCotizaciones;
-            this.cotizacionesChartData = [...this.originalsCotizaciones];
+            this.transformCotizacionesForHours();
+            this.transformCotizacionesForDay();
+            this.transformCotizacionesForMonth();
+            this.isDataLoaded = true;
           }, error(err) {
             console.error('Error al obtener las cotizaciones en el home', err);
           },
@@ -50,55 +57,34 @@ export class CotizacionesComponent implements OnInit {
       console.log("No encontré el id");
     }
   }
+
+  transformCotizacionesForHours() {
+    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.originalsCotizaciones);
+    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForHours);
+    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
+    this.cotChartDataFoyHour = sortedData.filter((item, index, array) => {
+      return index === 0 || item.time !== array[index - 1].time;
+    });
+  }
+
+  transformCotizacionesForDay() {
+    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.originalsCotizaciones);
+    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
+    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForDays);
+    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
+    this.cotChartDataFoyDay = sortedData.filter((item, index, array) => {
+      return index === 0 || item.time !== array[index - 1].time;
+    });
+  }
+
+  transformCotizacionesForMonth() {
+    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.originalsCotizaciones);
+    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
+    const cotsForMonths: ICotizacion[] = this.handleDTV.filterByMonths(cotsForDays);
+    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForMonths);
+    const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
+    this.cotChartDataFoyMonth = sortedData.filter((item, index, array) => {
+      return index === 0 || item.time !== array[index - 1].time;
+    });
+  }
 }
-
-
-// import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
-// import { DarkModeService } from '../../shared/services/dark-mode.service';
-// import { CandlestickChartComponent } from '../../shared/candlestick-chart/candlestick-chart.component';
-// import { DbService } from '../../shared/services/db.service';
-// import { ICotizacion } from '../../shared/interfaces/cotizacion';
-// import { FormsModule } from '@angular/forms';
-// import { Subject, takeUntil } from 'rxjs';
-
-// @Component({
-//   selector: 'app-apple-inc',
-//   standalone: true,
-//   imports: [CandlestickChartComponent, FormsModule],
-//   templateUrl: './apple-inc.component.html',
-//   styleUrl: './apple-inc.component.css'
-// })
-// export class AppleIncComponent implements OnInit, OnDestroy {
-
-//   darkModeService = inject(DarkModeService);
-//   originalsCotizaciones: ICotizacion[] = [];
-//   cotizacionesChartData: ICotizacion[] = [];
-//   selectedOption: string = '';
-//   private cotizacionesSubscription: any;
-
-//   constructor(private dbService: DbService) { }
-
-//   ngOnInit(): void {
-//     this.getAllCotizaciones();
-//   }
-
-//   getAllCotizaciones() {
-//     this.cotizacionesSubscription = this.dbService.getAllCotizacionesOfBackEnd('AAPL')
-//       .subscribe({
-//         next: (value: ICotizacion[]) => {
-//           console.log("apple onInidddddddddddddddt", this.cotizacionesChartData);
-//           const flatCotizaciones = value.flat();
-//           this.originalsCotizaciones = flatCotizaciones;
-//           this.cotizacionesChartData = [...this.originalsCotizaciones];
-//         }, error(err) {
-//           console.error('Error al obtener las cotizaciones en el home', err);
-//         },
-//       });
-//   }
-
-//   ngOnDestroy(): void {
-//     if (this.cotizacionesSubscription) {
-//       this.cotizacionesSubscription.unsubscribe();
-//     }
-//   }
-// }
