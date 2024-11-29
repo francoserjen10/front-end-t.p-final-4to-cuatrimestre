@@ -95,12 +95,42 @@ export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChang
       const intervals = ['1D', '1M', '1A'];
       const buttonsContainer = document.createElement('div');
       buttonsContainer.style.display = 'flex';
-      buttonsContainer.style.gap = '10px';
+      buttonsContainer.style.flexDirection = 'row';
+      buttonsContainer.style.gap = '8px';
+      buttonsContainer.style.justifyContent = 'center'
 
       intervals.forEach((interval) => {
         const button = document.createElement('button');
+
+        // Estilos de los botones
+        button.style.all = 'initial';
+        button.style.fontFamily = "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif";
+        button.style.fontSize = '16px';
+        button.style.fontWeight = '510';
+        button.style.lineHeight = '24px';
+        button.style.letterSpacing = '-0.32px';
+        button.style.padding = '8px 24px';
+        button.style.margin = '8px 24px';
+        button.style.color = 'rgba(19, 23, 34, 1)';
+        button.style.backgroundColor = '#a6ff33';
+        button.style.borderRadius = '8px';
+        button.style.cursor = 'pointer';
+
         button.innerText = interval;
         button.addEventListener('click', () => setChartInterval(interval));
+        // Estilos para hover y active (puedes usar eventos también)
+        button.addEventListener('mouseover', () => {
+          button.style.backgroundColor = '#FFAA00';
+        });
+        button.addEventListener('mouseout', () => {
+          button.style.backgroundColor = '#a6ff33';
+        });
+        button.addEventListener('mousedown', () => {
+          button.style.backgroundColor = '#FF0066';
+        });
+        button.addEventListener('mouseup', () => {
+          button.style.backgroundColor = '#a6ff33';
+        });
         buttonsContainer.appendChild(button);
       });
 
