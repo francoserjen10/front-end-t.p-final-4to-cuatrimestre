@@ -40,17 +40,19 @@ export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChang
   }
 
   ngAfterViewInit(): void {
-    this.dataSubject.subscribe((data) => {
-      if (data.forDay && data.forMonth && data.forYear) {
-        // Solo crea el gráfico cuando todos los datos están disponibles
-        if (!this.chart) {
-          this.createCandlestickChart();
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      this.dataSubject.subscribe((data) => {
+        if (data.forDay && data.forMonth && data.forYear) {
+          // Solo crea el gráfico cuando todos los datos están disponibles
+          if (!this.chart) {
+            this.createCandlestickChart();
+          }
+          this.updateChartData('1D', data.forDay);
+          this.updateChartData('1M', data.forMonth);
+          this.updateChartData('1A', data.forYear);
         }
-        this.updateChartData('1D', data.forDay);
-        this.updateChartData('1M', data.forMonth);
-        this.updateChartData('1A', data.forYear);
-      }
-    });
+      });
+    }
   }
 
   private updateChartData(interval: string, data: AreaData<Time>[]): void {
