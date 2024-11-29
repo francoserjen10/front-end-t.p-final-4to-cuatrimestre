@@ -20,6 +20,8 @@ export class CotizacionesComponent implements OnInit {
 
   darkModeService = inject(DarkModeService);
   companyId: string | null = '';
+  cotizacion: number | null = null;
+  cotizacionChange: string = '';
   originalsCotizaciones: ICotizacion[] = [];
   cotChartDataFoyDay: AreaData<Time>[] = [];
   cotChartDataFoyMonth: AreaData<Time>[] = [];
@@ -50,12 +52,29 @@ export class CotizacionesComponent implements OnInit {
             this.transformCotizacionesForDay();
             this.transformCotizacionesForMonth();
             this.isDataLoaded = true;
+            this.detailsOfEmpresa(this.originalsCotizaciones);
           }, error(err) {
             console.error('Error al obtener las cotizaciones en el home', err);
           },
         });
     } else {
-      console.log("No encontré el id");
+      this.companyId = 'AAPL';
+    }
+  }
+
+  detailsOfEmpresa(cotizaciones: ICotizacion[]) {
+    if (cotizaciones.length > 1) {
+      const sortedCotizaciones = cotizaciones.sort((a, b) => {
+        const dateA = new Date(a.fecha + 'T' + a.hora);
+        const dateB = new Date(b.fecha + 'T' + b.hora);
+        return Number(dateB) - Number(dateA);
+      });
+      const latestCotizacion = sortedCotizaciones[0];
+      const previousCotizacion = sortedCotizaciones[1];
+      const cotizacionChangeValue = latestCotizacion.cotization - previousCotizacion.cotization;
+      const cotizacionChangePercentage = (cotizacionChangeValue / previousCotizacion.cotization) * 100;
+      this.cotizacion = latestCotizacion.cotization;
+      this.cotizacionChange = `${cotizacionChangeValue.toFixed(2)} (${cotizacionChangePercentage.toFixed(2)}%)`;
     }
   }
 

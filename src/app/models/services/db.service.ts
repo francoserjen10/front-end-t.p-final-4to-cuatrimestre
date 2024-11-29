@@ -17,4 +17,9 @@ export class DbService {
   getAllCotizacionesOfBackEnd(codEmpresa: string): Observable<ICotizacion[]> {
     return this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-cotizaciones/${codEmpresa}`);
   }
+
+  // Get ultimas cotizaciones de todas las empresas
+  getLatestCotizacionesOfBackEnd(): Observable<ICotizacion[]> {
+    return this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-latest-cotizaciones`);
+  }
 }

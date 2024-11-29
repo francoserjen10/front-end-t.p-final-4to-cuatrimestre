@@ -1,8 +1,19 @@
 <div class="container-fluid">
     <div class="ticker-container">
         <div class="ticker-content">
-            <span class="span-stock" *ngFor="let stock of stocks">
-                {{ stock.symbol }} {{ stock.price }} {{ stock.change }}
+            <span class="span-stock" *ngFor="let cotizacion of cotizaciones">
+                {{ cotizacion.empresa }} {{ cotizacion.cotization | number:'1.2-2' }}
+                <span
+                    [ngClass]="{ 'positive': cotizacion.variabilidad.includes('+'), 'negative': cotizacion.variabilidad.includes('-') }">
+                    {{ cotizacion.variabilidad }}
+                </span>
+            </span>
+            <span class="span-stock" *ngFor="let cotizacion of cotizaciones">
+                {{ cotizacion.empresa }} {{ cotizacion.cotization | number:'1.2-2' }}
+                <span
+                    [ngClass]="{ 'positive': cotizacion.variabilidad.includes('+'), 'negative': cotizacion.variabilidad.includes('-') }">
+                    {{ cotizacion.variabilidad }}
+                </span>
             </span>
         </div>
     </div>
