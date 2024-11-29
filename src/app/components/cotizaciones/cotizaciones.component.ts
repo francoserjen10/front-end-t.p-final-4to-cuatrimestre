@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DarkModeService } from '../../shared/services/dark-mode.service';
-import { ICotizacion } from '../../shared/interfaces/cotizacion';
-import { DbService } from '../../shared/services/db.service';
-import { CandlestickChartComponent } from '../../shared/candlestick-chart/candlestick-chart.component';
+import { DarkModeService } from '../../models/services/dark-mode.service';
+import { ICotizacion } from '../../models/interfaces/cotizacion';
+import { DbService } from '../../models/services/db.service';
+import { CandlestickChartComponent } from '../candlestick-chart/candlestick-chart.component';
 import { FormsModule } from '@angular/forms';
-import { HandleDateTimeValueService } from '../../shared/services/handle-date-time-value.service';
+import { HandleDateTimeValueService } from '../../models/services/handle-date-time-value.service';
 import { AreaData, Time } from 'lightweight-charts';
 
 @Component({
