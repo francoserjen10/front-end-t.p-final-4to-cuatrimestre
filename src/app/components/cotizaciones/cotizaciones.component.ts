@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DarkModeService } from '../../models/services/dark-mode.service';
 import { ICotizacion } from '../../models/interfaces/cotizacion';
 import { DbService } from '../../models/services/db.service';
-import { CandlestickChartComponent } from '../candlestick-chart/candlestick-chart.component';
+import { ChartCotizacionesComponent } from '../chart/chart-cotizaciones.component';
 import { FormsModule } from '@angular/forms';
 import { HandleDateTimeValueService } from '../../models/services/handle-date-time-value.service';
 import { AreaData, Time } from 'lightweight-charts';
@@ -11,7 +11,7 @@ import { AreaData, Time } from 'lightweight-charts';
 @Component({
   selector: 'app-cotizaciones',
   standalone: true,
-  imports: [CandlestickChartComponent, FormsModule],
+  imports: [ChartCotizacionesComponent, FormsModule],
   templateUrl: './cotizaciones.component.html',
   styleUrl: './cotizaciones.component.css'
 })
