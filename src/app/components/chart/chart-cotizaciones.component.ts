@@ -3,13 +3,13 @@ import { AreaData, createChart, ISeriesApi, Time } from 'lightweight-charts';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-candlestick-chart',
+  selector: 'app-chart-cotizaciones',
   standalone: true,
   imports: [],
-  templateUrl: './candlestick-chart.component.html',
-  styleUrl: './candlestick-chart.component.css'
+  templateUrl: './chart-cotizaciones.component.html',
+  styleUrl: './chart-cotizaciones.component.css'
 })
-export class CandlestickChartComponent implements AfterViewInit, OnInit, OnChanges {
+export class ChartCotizacionesComponent implements AfterViewInit, OnInit, OnChanges {
 
   @Input() forDay: AreaData<Time>[] = [];
   @Input() forMonth: AreaData<Time>[] = [];
