@@ -20,7 +20,7 @@
 
 @keyframes ticker-scroll {
     from {
-        transform: translateX(5%);
+        transform: translateX(0%);
     }
 
     to {
