@@ -29,10 +29,31 @@ export class HandleDateTimeValueService {
   }
 
   filterByWeekdays(cotizaciones: ICotizacion[]): ICotizacion[] {
-    return cotizaciones.filter((cotMarket) => {
+    const weekdaysCotizaciones = cotizaciones.filter((cotMarket) => {
       const day = new Date(cotMarket.fecha).getDay();
       return day >= 0 && day <= 4;
     });
+
+    const cotizacionesPorDia: Record<string, ICotizacion[]> = {};
+    weekdaysCotizaciones.forEach((cotizacion) => {
+      const dayKey = cotizacion.fecha.split('T')[0];
+      if (!cotizacionesPorDia[dayKey]) {
+        cotizacionesPorDia[dayKey] = [];
+      }
+      cotizacionesPorDia[dayKey].push(cotizacion);
+    });
+
+    const promediosPorDia: ICotizacion[] = Object.values(cotizacionesPorDia).map((cotizaciones) => {
+      const promedio =
+        cotizaciones.reduce((sum, cot) => sum + cot.cotization, 0) /
+        cotizaciones.length;
+      const baseCotizacion = cotizaciones[0];
+      return {
+        ...baseCotizacion,
+        cotization: promedio,
+      };
+    });
+    return promediosPorDia;
   }
 
   filterByMonths(cotizaciones: ICotizacion[]): ICotizacion[] {

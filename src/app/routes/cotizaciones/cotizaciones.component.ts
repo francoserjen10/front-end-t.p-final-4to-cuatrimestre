@@ -20,9 +20,9 @@ export class CotizacionesComponent implements OnInit {
   darkModeService = inject(DarkModeService);
   companyId: string | null = '';
   originalsCotizaciones: ICotizacion[] = [];
-  cotChartDataFoyHour: AreaData<Time>[] = [];
   cotChartDataFoyDay: AreaData<Time>[] = [];
   cotChartDataFoyMonth: AreaData<Time>[] = [];
+  cotChartDataFoyYear: AreaData<Time>[] = [];
   isDataLoaded: boolean = false; // Estado para controlar la carga de datos
 
   constructor(
@@ -62,7 +62,7 @@ export class CotizacionesComponent implements OnInit {
     const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.originalsCotizaciones);
     const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForHours);
     const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
-    this.cotChartDataFoyHour = sortedData.filter((item, index, array) => {
+    this.cotChartDataFoyDay = sortedData.filter((item, index, array) => {
       return index === 0 || item.time !== array[index - 1].time;
     });
   }
@@ -72,7 +72,7 @@ export class CotizacionesComponent implements OnInit {
     const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
     const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForDays);
     const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
-    this.cotChartDataFoyDay = sortedData.filter((item, index, array) => {
+    this.cotChartDataFoyMonth = sortedData.filter((item, index, array) => {
       return index === 0 || item.time !== array[index - 1].time;
     });
   }
@@ -83,7 +83,7 @@ export class CotizacionesComponent implements OnInit {
     const cotsForMonths: ICotizacion[] = this.handleDTV.filterByMonths(cotsForDays);
     const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForMonths);
     const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
-    this.cotChartDataFoyMonth = sortedData.filter((item, index, array) => {
+    this.cotChartDataFoyYear = sortedData.filter((item, index, array) => {
       return index === 0 || item.time !== array[index - 1].time;
     });
   }
