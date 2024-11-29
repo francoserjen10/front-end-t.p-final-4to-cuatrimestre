@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DarkModeService } from './shared/services/dark-mode.service';
-import { NavBarComponent } from './core/components/navBar/navBar.component';
-import { SideBarComponent } from './core/components/sideBar/side-bar.component';
-import { StockTickerComponent } from './core/components/ticker/stock-ticker.component';
+import { DarkModeService } from './models/services/dark-mode.service';
+import { NavBarComponent } from './components/navBar/navBar.component';
+import { SideBarComponent } from './components/sideBar/side-bar.component';
+import { StockTickerComponent } from './components/ticker/stock-ticker.component';
 
 @Component({
   selector: 'app-root',
