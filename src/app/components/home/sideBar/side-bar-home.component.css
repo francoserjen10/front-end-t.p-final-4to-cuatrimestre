@@ -37,10 +37,17 @@
 }
 
 .nav-item {
-    margin-bottom: 10%;
+    margin: 2% 0;
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 200px;
+    text-align: center;
+    background-color: #f6ddcc;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-ul{
+ul {
     width: 100%;
 }
 

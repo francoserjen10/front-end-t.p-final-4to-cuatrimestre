@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { NavBarComponent } from '../navBar/navBar.component';
-import { SideBarComponent } from '../sideBar/side-bar.component';
 import { DarkModeService } from '../../models/services/dark-mode.service';
+import { SideBarHomeComponent } from './sideBar/side-bar-home.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavBarComponent, SideBarComponent],
+  imports: [SideBarHomeComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
