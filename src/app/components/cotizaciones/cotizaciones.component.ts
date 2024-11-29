@@ -7,11 +7,12 @@ import { ChartCotizacionesComponent } from '../chart/chart-cotizaciones.componen
 import { FormsModule } from '@angular/forms';
 import { HandleDateTimeValueService } from '../../models/services/handle-date-time-value.service';
 import { AreaData, Time } from 'lightweight-charts';
+import { SideBarCotizacionesComponent } from './sideBar/side-bar-cotizaciones.component';
 
 @Component({
   selector: 'app-cotizaciones',
   standalone: true,
-  imports: [ChartCotizacionesComponent, FormsModule],
+  imports: [ChartCotizacionesComponent, FormsModule, SideBarCotizacionesComponent],
   templateUrl: './cotizaciones.component.html',
   styleUrl: './cotizaciones.component.css'
 })

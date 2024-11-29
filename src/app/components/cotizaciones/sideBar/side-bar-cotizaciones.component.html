@@ -1,0 +1,54 @@
+<div class="container-fluid bg-body-tertiary">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-6 col-xl-6 px-sm-2 px-0">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-2 pt-2 min-vh-100">
+                <a routerLink="/home" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto sidebar-title">
+                    <span class="fs-5 d-none d-sm-inline">Empresas</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start rounded-list"
+                    id="menu">
+                    <li class="nav-item">
+                        <button (click)="navigateTo('/cotizaciones/AAPL')" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-apple"></i> <span class="ms-1 d-none d-sm-inline">Apple Inc.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button (click)="navigateTo('/cotizaciones/TSLA')" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-ev-front"></i> <span class="ms-1 d-none d-sm-inline">Tesla Inc.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button (click)="navigateTo('/cotizaciones/JPM')" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-bank"></i> <span class="ms-1 d-none d-sm-inline">JPMorgan Chase &
+                                Co.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button (click)="navigateTo('/cotizaciones/ROG.SW')" class="nav-link px-0 align-middle ">
+                            <i class="fs-4 bi-capsule"></i> <span class="ms-1 d-none d-sm-inline">Roche Holding
+                                AG.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button (click)="navigateTo('/cotizaciones/SHEL')" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-fuel-pump"></i> <span class="ms-1 d-none d-sm-inline">Shell
+                                plc.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button (click)="navigateTo('/cotizaciones/V')" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-credit-card-2-front"></i> <span class="ms-1 d-none d-sm-inline">Visa
+                                Inc.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button (click)="navigateTo('/cotizaciones/WMT')" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-cart-check"></i> <span class="ms-1 d-none d-sm-inline">Walmart
+                                Inc.</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
