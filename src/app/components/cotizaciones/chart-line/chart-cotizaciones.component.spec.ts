@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChartCotizacionesComponent } from './chart-cotizaciones.component';
+import { ChartCotizacionesComponent } from '../chart-cotizaciones.component';
 
 describe('ChartCotizacionesComponent', () => {
   let component: ChartCotizacionesComponent;

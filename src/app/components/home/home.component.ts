@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { DarkModeService } from '../../models/services/dark-mode.service';
+import { DarkModeService } from '../../services/dark-mode.service';
 import { SideBarHomeComponent } from './sideBar/side-bar-home.component';
 
 @Component({

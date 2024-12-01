@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { DbService } from '../../models/services/db.service';
-import { ICotizacion } from '../../models/interfaces/cotizacion';
+import { DbService } from '../../services/db.service';
+import { ICotizacion } from '../../interfaces/cotizacion';
+import { Util } from '../../utils/util';
 
 @Component({
   selector: 'app-stock-ticker',
@@ -13,8 +14,11 @@ import { ICotizacion } from '../../models/interfaces/cotizacion';
 export class StockTickerComponent implements OnInit {
 
   cotizaciones: ICotizacion[] | any = [];
+  util: Util;
 
-  constructor(private dbService: DbService) { }
+  constructor(private dbService: DbService) { 
+    this.util = new Util();
+  }
 
   ngOnInit(): void {
     this.getAllCotizaciones();
@@ -24,23 +28,13 @@ export class StockTickerComponent implements OnInit {
     this.dbService.getLatestCotizacionesOfBackEnd()
       .subscribe({
         next: (value: ICotizacion[]) => {
-          const groupedCotizaciones = this.groupByCompany(value);
+          const groupedCotizaciones = this.util.groupByCompany(value);
           this.cotizaciones = this.calculateVariability(groupedCotizaciones);
         },
         error(err) {
           console.error('Error al obtener las cotizaciones', err);
         },
       });
-  }
-
-  groupByCompany(cotizaciones: ICotizacion[]): { [key: string]: ICotizacion[] } {
-    return cotizaciones.reduce((acc, cotizacion) => {
-      if (!acc[cotizacion.empresa]) {
-        acc[cotizacion.empresa] = [];
-      }
-      acc[cotizacion.empresa].push(cotizacion);
-      return acc;
-    }, {} as { [key: string]: ICotizacion[] });
   }
 
   calculateVariability(groupedCotizaciones: any): any[] {

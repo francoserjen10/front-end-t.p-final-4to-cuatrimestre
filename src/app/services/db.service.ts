@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../environments/environment.development';
 import { ICotizacion } from '../interfaces/cotizacion';
 
 @Injectable({
@@ -13,8 +13,12 @@ export class DbService {
 
   constructor(private http: HttpClient) { }
 
+  getAllCotizacionesOfBackEnd(): Observable<ICotizacion[]> {
+    return this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-cotizaciones`);
+  }
+
   //Obtener todas las cotizaciones
-  getAllCotizacionesOfBackEnd(codEmpresa: string): Observable<ICotizacion[]> {
+  getAllCotizacionesForCodEmpOfBackEnd(codEmpresa: string): Observable<ICotizacion[]> {
     return this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-cotizaciones/${codEmpresa}`);
   }
 

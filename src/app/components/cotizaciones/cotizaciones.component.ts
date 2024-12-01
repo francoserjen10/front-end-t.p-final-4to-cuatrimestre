@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DarkModeService } from '../../models/services/dark-mode.service';
-import { ICotizacion } from '../../models/interfaces/cotizacion';
-import { DbService } from '../../models/services/db.service';
-import { ChartCotizacionesComponent } from '../chart/chart-cotizaciones.component';
+import { DarkModeService } from '../../services/dark-mode.service';
+import { ICotizacion } from '../../interfaces/cotizacion';
+import { DbService } from '../../services/db.service';
 import { FormsModule } from '@angular/forms';
-import { HandleDateTimeValueService } from '../../models/services/handle-date-time-value.service';
-import { AreaData, Time } from 'lightweight-charts';
 import { SideBarCotizacionesComponent } from './sideBar/side-bar-cotizaciones.component';
+import { ChartCotizacionesComponent } from './chart-line/chart-cotizaciones.component';
+import { AreaData, Time } from 'lightweight-charts';
+import { Util } from '../../utils/util';
 
 @Component({
   selector: 'app-cotizaciones',
@@ -27,12 +27,15 @@ export class CotizacionesComponent implements OnInit {
   cotChartDataFoyMonth: AreaData<Time>[] = [];
   cotChartDataFoyYear: AreaData<Time>[] = [];
   isDataLoaded: boolean = false; // Estado para controlar la carga de datos
+  util: Util;
+  // private handleDTV: new Util();
 
   constructor(
     private route: ActivatedRoute,
     private dbService: DbService,
-    private handleDTV: HandleDateTimeValueService
-  ) { }
+  ) {
+    this.util = new Util();
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -43,7 +46,7 @@ export class CotizacionesComponent implements OnInit {
 
   getAllCotizaciones() {
     if (this.companyId) {
-      this.dbService.getAllCotizacionesOfBackEnd(this.companyId)
+      this.dbService.getAllCotizacionesForCodEmpOfBackEnd(this.companyId)
         .subscribe({
           next: (value: ICotizacion[]) => {
             const flatCotizaciones = value.flat();
@@ -79,8 +82,8 @@ export class CotizacionesComponent implements OnInit {
   }
 
   transformCotizacionesForHours() {
-    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.originalsCotizaciones);
-    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForHours);
+    const cotsForHours: ICotizacion[] = this.util.filterByMarketHours(this.originalsCotizaciones);
+    const dateTimeNoruega = this.util.transformDateAndTimeInTimestamp(cotsForHours);
     const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
     this.cotChartDataFoyDay = sortedData.filter((item, index, array) => {
       return index === 0 || item.time !== array[index - 1].time;
@@ -88,9 +91,9 @@ export class CotizacionesComponent implements OnInit {
   }
 
   transformCotizacionesForDay() {
-    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.originalsCotizaciones);
-    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
-    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForDays);
+    const cotsForHours: ICotizacion[] = this.util.filterByMarketHours(this.originalsCotizaciones);
+    const cotsForDays: ICotizacion[] = this.util.filterByWeekdays(cotsForHours);
+    const dateTimeNoruega = this.util.transformDateAndTimeInTimestamp(cotsForDays);
     const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
     this.cotChartDataFoyMonth = sortedData.filter((item, index, array) => {
       return index === 0 || item.time !== array[index - 1].time;
@@ -98,10 +101,10 @@ export class CotizacionesComponent implements OnInit {
   }
 
   transformCotizacionesForMonth() {
-    const cotsForHours: ICotizacion[] = this.handleDTV.filterByMarketHours(this.originalsCotizaciones);
-    const cotsForDays: ICotizacion[] = this.handleDTV.filterByWeekdays(cotsForHours);
-    const cotsForMonths: ICotizacion[] = this.handleDTV.filterByMonths(cotsForDays);
-    const dateTimeNoruega = this.handleDTV.transformDateAndTimeInTimestamp(cotsForMonths);
+    const cotsForHours: ICotizacion[] = this.util.filterByMarketHours(this.originalsCotizaciones);
+    const cotsForDays: ICotizacion[] = this.util.filterByWeekdays(cotsForHours);
+    const cotsForMonths: ICotizacion[] = this.util.filterByMonths(cotsForDays);
+    const dateTimeNoruega = this.util.transformDateAndTimeInTimestamp(cotsForMonths);
     const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
     this.cotChartDataFoyYear = sortedData.filter((item, index, array) => {
       return index === 0 || item.time !== array[index - 1].time;
