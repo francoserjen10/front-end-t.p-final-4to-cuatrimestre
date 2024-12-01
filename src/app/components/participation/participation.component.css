@@ -1,4 +1,9 @@
-.container-chart-pie{
+.layout {
     display: flex;
-    justify-content: center;
+    flex: 1;
+    gap: 20%;
+}
+
+.container-chart-pie {
+    flex: 1;
 }

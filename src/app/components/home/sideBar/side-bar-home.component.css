@@ -80,3 +80,9 @@ span {
         width: 100% !important;
     }
 }
+
+@media (min-width: 256) {
+    .nav-item {
+        margin: 10% 0;
+    }
+}
