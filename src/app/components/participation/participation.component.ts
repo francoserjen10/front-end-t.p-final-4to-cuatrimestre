@@ -47,6 +47,7 @@ export class ParticipationComponent implements OnInit {
         const cotizacionesEmpresa = cotizacionesForEmpresa[empresa];
         const totalEmpresaCotizacion = cotizacionesEmpresa.reduce((total, cotizacion) => total + cotizacion.cotization, 0);
         this.participaciones[empresa] = parseFloat(((totalEmpresaCotizacion / totalMarketCotizacion) * 100).toFixed(2));
+        console.log('participaciones:', this.participaciones)
       }
     }
   }

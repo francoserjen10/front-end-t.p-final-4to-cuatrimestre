@@ -1,5 +1,6 @@
 import { AreaData, Time, UTCTimestamp } from "lightweight-charts";
 import { ICotizacion } from "../interfaces/cotizacion";
+import { IValueIndice } from "../interfaces/indices-value";
 
 export class Util {
 
@@ -70,5 +71,28 @@ export class Util {
             acc[cotizacion.empresa].push(cotizacion);
             return acc;
         }, {} as { [key: string]: ICotizacion[] });
+    }
+
+    // ----------------------- INDICES
+    groupByIndice(indices: IValueIndice[]): { [key: string]: IValueIndice[] } {
+        return indices.reduce((acc, indice) => {
+            if (!acc[indice.codigoIndice]) {
+                acc[indice.codigoIndice] = [];
+            }
+            acc[indice.codigoIndice].push(indice);
+            return acc;
+        }, {} as { [key: string]: IValueIndice[] });
+    }
+
+    transformDateAndTimeInTimestampIndices(indices: IValueIndice[]): AreaData<Time>[] {
+        return indices.map((data) => {
+            const dateTimeUtc = `${data.fecha}T${data.hora}Z`
+            const timestamp: UTCTimestamp = (Date.parse(dateTimeUtc) / 1000) as UTCTimestamp;
+            const timestampOslo: UTCTimestamp = (timestamp + 3600) as UTCTimestamp;
+            return {
+                time: timestampOslo,
+                value: data.valorIndice,
+            };
+        });
     }
 }
