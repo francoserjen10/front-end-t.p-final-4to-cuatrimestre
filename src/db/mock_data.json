@@ -1,0 +1,126 @@
+{
+    "all-cotizaciones": [
+        {
+            "_id": "673e4223f0cf3b19fa08d1d4",
+            "id": 2,
+            "fecha": "2024-01-01",
+            "hora": "00:00",
+            "dateUTC": "2024-01-01",
+            "cotization": 178.43,
+            "empresa": "AAPL",
+            "__v": 0
+        },
+        {
+            "_id": "673e4224f0cf3b19fa08d1d5",
+            "id": 6,
+            "fecha": "2024-01-01",
+            "hora": "01:00",
+            "dateUTC": "2024-01-01",
+            "cotization": 178.85,
+            "empresa": "AAPL",
+            "__v": 0
+        },
+        {
+            "_id": "673e4224f0cf3b19fa08d1d6",
+            "id": 9,
+            "fecha": "2024-01-01",
+            "hora": "02:00",
+            "dateUTC": "2024-01-01",
+            "cotization": 178.17,
+            "empresa": "AAPL",
+            "__v": 0
+        },
+        {
+            "_id": "673e4224f0cf3b19fa08d1d7",
+            "id": 12,
+            "fecha": "2024-01-01",
+            "hora": "03:00",
+            "dateUTC": "2024-01-01",
+            "cotization": 179.1,
+            "empresa": "AAPL",
+            "__v": 0
+        },
+        {
+            "_id": "673e4224f0cf3b19fa08d1d8",
+            "id": 15,
+            "fecha": "2024-01-01",
+            "hora": "04:00",
+            "dateUTC": "2024-01-01",
+            "cotization": 178.95,
+            "empresa": "AAPL",
+            "__v": 0
+        }
+    ],
+    "all-latest-cotizaciones": [
+        {
+            "_id": "674cdc657bb3843347904ee8",
+            "id": 299621,
+            "fecha": "2024-12-01",
+            "hora": "22:00",
+            "dateUTC": "2024-12-01",
+            "cotization": 113.86,
+            "empresa": "AAPL",
+            "__v": 0
+        },
+        {
+            "_id": "674cdc657bb3843347904eea",
+            "id": 299616,
+            "fecha": "2024-12-01",
+            "hora": "22:00",
+            "dateUTC": "2024-12-01",
+            "cotization": 174.57,
+            "empresa": "TSLA",
+            "__v": 0
+        },
+        {
+            "_id": "674cdc657bb3843347904eec",
+            "id": 299628,
+            "fecha": "2024-12-01",
+            "hora": "22:00",
+            "dateUTC": "2024-12-01",
+            "cotization": 83.03,
+            "empresa": "JPM",
+            "__v": 0
+        },
+        {
+            "_id": "674cdc657bb3843347904eee",
+            "id": 299627,
+            "fecha": "2024-12-01",
+            "hora": "22:00",
+            "dateUTC": "2024-12-01",
+            "cotization": 253.39,
+            "empresa": "ROG.SW",
+            "__v": 0
+        },
+        {
+            "_id": "674cdc657bb3843347904ef0",
+            "id": 299643,
+            "fecha": "2024-12-01",
+            "hora": "22:00",
+            "dateUTC": "2024-12-01",
+            "cotization": 6.31,
+            "empresa": "SHEL",
+            "__v": 0
+        },
+        {
+            "_id": "674cdc657bb3843347904ef2",
+            "id": 299625,
+            "fecha": "2024-12-01",
+            "hora": "22:00",
+            "dateUTC": "2024-12-01",
+            "cotization": 152.28,
+            "empresa": "V",
+            "__v": 0
+        },
+        {
+            "_id": "674cdc657bb3843347904ef4",
+            "id": 299632,
+            "fecha": "2024-12-01",
+            "hora": "22:00",
+            "dateUTC": "2024-12-01",
+            "cotization": 106.35,
+            "empresa": "WMT",
+            "__v": 0
+        }
+    ]
+}

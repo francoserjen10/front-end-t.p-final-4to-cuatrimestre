@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
 @Component({
@@ -11,6 +11,7 @@ import { Chart } from 'chart.js/auto';
 export class ChartParticipacionComponent implements AfterViewInit {
 
   @Input() data: { [empresa: string]: number } = {};
+  @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
 
   constructor() { }
 
@@ -21,7 +22,7 @@ export class ChartParticipacionComponent implements AfterViewInit {
   }
 
   crateChartPie() {
-    const ctx = document.getElementById('participacion-chart') as HTMLCanvasElement;
+    const ctx = this.chartCanvas.nativeElement.getContext('2d');
     if (ctx) {
       new Chart(ctx, {
         type: 'pie',
