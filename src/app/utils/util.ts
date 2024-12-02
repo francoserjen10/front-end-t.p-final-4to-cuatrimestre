@@ -72,3 +72,4 @@ export class Util {
         }, {} as { [key: string]: ICotizacion[] });
     }
 }
+ 

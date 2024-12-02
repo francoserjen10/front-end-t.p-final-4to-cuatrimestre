@@ -17,6 +17,7 @@ export class ParticipationComponent implements OnInit {
   originalsCotizaciones: ICotizacion[] = [];
   util: Util;
   participaciones: { [empresa: string]: number } = {};
+  hasLoaded = false;
 
   constructor(private dbService: DbService) { this.util = new Util(); }
 
@@ -31,9 +32,12 @@ export class ParticipationComponent implements OnInit {
         next: (value: ICotizacion[]) => {
           const flatCotizaciones = value.flat();
           this.originalsCotizaciones = flatCotizaciones;
-          this.calculateParticipations()
+          this.calculateParticipations();
         }, error(err) {
           console.error('Error al obtener las cotizaciones en el home', err);
+        },
+        complete: () => {
+          this.hasLoaded = true;
         },
       });
   }
