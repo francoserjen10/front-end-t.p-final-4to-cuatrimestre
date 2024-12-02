@@ -29,7 +29,8 @@ export class IndiceComponent implements OnInit {
     this.dbService.getAllIndicesOfBackEnd()
       .subscribe({
         next: (value: IValueIndice[]) => {
-          const sortedIndices = this.indicesSorted(value)
+          const norwayDate = this.util.transformDateUTCToNorway(value);
+          const sortedIndices = this.indicesSorted(norwayDate);
           const groupedIndices = this.util.groupByIndice(sortedIndices);
           this.indicesChartData = groupedIndices;
         }, error(err) {

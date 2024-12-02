@@ -52,7 +52,7 @@ export class ChartIndiceComponent {
             tooltip: {
               enabled: true, // Mostrar tooltips
               callbacks: {
-                label: (tooltipItem) => `Valor: ${tooltipItem.formattedValue}`, // Personalizar el contenido del tooltip
+                label: (tooltipItem) => `Valor: ${tooltipItem.formattedValue}`,
               },
             },
           },

@@ -1,8 +1,21 @@
 import { AreaData, Time, UTCTimestamp } from "lightweight-charts";
 import { ICotizacion } from "../interfaces/cotizacion";
 import { IValueIndice } from "../interfaces/indices-value";
+import { DateTime } from 'luxon';
 
 export class Util {
+
+    transformDateUTCToNorway(indice: IValueIndice[]): IValueIndice[] {
+        return indice.map(data => {
+            const dateTimeUtc = `${data.fecha}T${data.hora}Z`
+            const norwayDate = DateTime.fromISO(dateTimeUtc).setZone('Europe/Oslo');
+            return {
+                ...data,
+                fecha: norwayDate.toFormat('yyyy-MM-dd'),
+                hora: norwayDate.toFormat('HH:mm')
+            };
+        });
+    }
 
     transformDateAndTimeInTimestamp(cotizaciones: ICotizacion[]): AreaData<Time>[] {
         return cotizaciones.map((data) => {
@@ -83,17 +96,4 @@ export class Util {
             return acc;
         }, {} as { [key: string]: IValueIndice[] });
     }
-
-    transformDateAndTimeInTimestampIndices(indices: IValueIndice[]): AreaData<Time>[] {
-        return indices.map((data) => {
-            const dateTimeUtc = `${data.fecha}T${data.hora}Z`
-            const timestamp: UTCTimestamp = (Date.parse(dateTimeUtc) / 1000) as UTCTimestamp;
-            const timestampOslo: UTCTimestamp = (timestamp + 3600) as UTCTimestamp;
-            return {
-                time: timestampOslo,
-                value: data.valorIndice,
-            };
-        });
-    }
 }
- 
