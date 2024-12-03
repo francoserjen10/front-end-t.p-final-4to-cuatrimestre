@@ -103,7 +103,7 @@ export class CotizacionesComponent implements OnInit {
   transformCotizacionesForMonth() {
     const cotsForHours: ICotizacion[] = this.util.filterByMarketHours(this.originalsCotizaciones);
     const cotsForDays: ICotizacion[] = this.util.filterByWeekdays(cotsForHours);
-    const cotsForMonths: ICotizacion[] = this.util.filterByMonths(cotsForDays);
+    const cotsForMonths: ICotizacion[] = this.util.filterCotizacionesByMonths(cotsForDays);
     const dateTimeNoruega = this.util.transformDateAndTimeInTimestamp(cotsForMonths);
     const sortedData = dateTimeNoruega.sort((a, b) => Number(a.time) - Number(b.time));
     this.cotChartDataFoyYear = sortedData.filter((item, index, array) => {

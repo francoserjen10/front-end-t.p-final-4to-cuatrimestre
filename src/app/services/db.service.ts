@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { ICotizacion } from '../interfaces/cotizacion';
+import { IValueIndice } from '../interfaces/indices-value';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,10 @@ export class DbService {
   // Get ultimas cotizaciones de todas las empresas
   getLatestCotizacionesOfBackEnd(): Observable<ICotizacion[]> {
     return this.http.get<ICotizacion[]>(`${this.apiUrl}/cotizaciones/all-latest-cotizaciones`);
+  }
+
+   // Get ultimas cotizaciones de todas las empresas
+   getAllIndicesOfBackEnd(): Observable<IValueIndice[]> {
+    return this.http.get<IValueIndice[]>(`${this.apiUrl}/indice/all-indices-bursatiles-local`);
   }
 }

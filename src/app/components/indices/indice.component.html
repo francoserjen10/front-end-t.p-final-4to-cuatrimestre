@@ -1,1 +1,8 @@
-<p>indice works!</p>
+<div class="layout">
+    <app-side-bar-home />
+    <div class="container-chart-pie">
+        @if(hasLoaded) {
+        <app-chart-indice [dataForDay]="indicesChartDataForDay" [dataForMonth]="indicesChartDataForMonth" />
+        }
+    </div>
+</div>
