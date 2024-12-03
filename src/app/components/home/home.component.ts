@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { DarkModeService } from '../../services/dark-mode.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +8,4 @@ import { DarkModeService } from '../../services/dark-mode.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
-  darkModeService = inject(DarkModeService);
 }
