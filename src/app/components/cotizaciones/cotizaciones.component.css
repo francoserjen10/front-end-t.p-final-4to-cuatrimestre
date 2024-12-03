@@ -1,15 +1,23 @@
 .container {
   display: flex;
   height: 100%;
+  width: 100%;
 }
 
 .container-buttons-empresas {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  /* gap: 10px; */
-  /* top: 50%; */
-  transform: translateY(50%);
+  transform: translateY(40%);
+}
+
+.container-buttons-empresas button {
+  width: 150px;
+  height: 100%;
+  margin: 5% 0;
+  border-radius: 5px;
+  background-color: #79c7eb;
+  box-shadow: 2px 2px 8px rgba(1, 1, 1, 1);
 }
 
 .content-bag {
@@ -17,10 +25,9 @@
   /* Ocupa el espacio restante del layout */
   display: flex;
   flex-direction: column;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   padding: 2% 1%;
-  /* overflow-y: auto; */
-  /* Permitir scroll en el contenido */
+  height: 100%;
 }
 
 .content-variability {

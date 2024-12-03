@@ -4,7 +4,6 @@ import { DarkModeService } from '../../services/dark-mode.service';
 import { ICotizacion } from '../../interfaces/cotizacion';
 import { DbService } from '../../services/db.service';
 import { FormsModule } from '@angular/forms';
-import { SideBarCotizacionesComponent } from './sideBar/side-bar-cotizaciones.component';
 import { ChartCotizacionesComponent } from './chart-line/chart-cotizaciones.component';
 import { AreaData, Time } from 'lightweight-charts';
 import { Util } from '../../utils/util';
@@ -12,7 +11,7 @@ import { Util } from '../../utils/util';
 @Component({
   selector: 'app-cotizaciones',
   standalone: true,
-  imports: [ChartCotizacionesComponent, FormsModule, SideBarCotizacionesComponent, RouterLink],
+  imports: [ChartCotizacionesComponent, FormsModule, RouterLink],
   templateUrl: './cotizaciones.component.html',
   styleUrl: './cotizaciones.component.css'
 })
