@@ -16,10 +16,12 @@ export class ChartIndiceComponent {
   @Input() dataForMonth: { [key: string]: IValueIndice[] } = {};
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
   private chart: Chart | null = null; // Referencia al gráfico
+  private currentData: { [key: string]: IValueIndice[] } = {}; 
   constructor() { }
 
   ngAfterViewInit(): void {
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      this.currentData = this.dataForDay;
       this.crateChartLine();
     }
   }
@@ -33,7 +35,7 @@ export class ChartIndiceComponent {
       this.chart = new Chart(ctx, {
         type: 'line', // Tipo de gráfico: línea
         data: {
-          labels: Object.keys(this.dataForDay).map(date => new Date(date)), // Usando las claves de 'data' como etiquetas (eje X)
+          labels: Object.keys(this.currentData).map(date => new Date(date)), // Usando las claves de 'data' como etiquetas (eje X)
           datasets: this.createDatasets(),
         },
         options: {
@@ -77,8 +79,8 @@ export class ChartIndiceComponent {
   // Preparar los datasets para Chart.js
   createDatasets() {
     const datasets: any = [];
-    Object.keys(this.dataForDay).forEach((key) => {
-      const areaData = this.dataForDay[key];
+    Object.keys(this.currentData).forEach((key) => {
+      const areaData = this.currentData[key];
       if (areaData) {
         const chartData = areaData.map((i) => ({
           x: `${i.fecha}T${i.hora}`, // Tiempo en el que ocurrió el valor
@@ -109,7 +111,7 @@ export class ChartIndiceComponent {
   }
 
   changeData(type: 'day' | 'month'): void {
-    this.dataForDay = type === 'day' ? this.dataForDay : this.dataForMonth;
+    this.currentData = type === 'day' ? this.dataForDay : this.dataForMonth;
     this.crateChartLine();
   }
 }
