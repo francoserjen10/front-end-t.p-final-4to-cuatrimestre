@@ -1,5 +1,4 @@
-<div class="layout">
-    <app-side-bar-cotizaciones />
+<div class="container">
     <div class="content-bag" [attr.data-bs-theme]="darkModeService.darkModeSignal()">
         <div class="title">
             <h2>{{companyId}}</h2>
@@ -16,5 +15,30 @@
             <app-chart-cotizaciones [forDay]="cotChartDataFoyDay" [forMonth]="cotChartDataFoyMonth"
                 [forYear]="cotChartDataFoyYear"></app-chart-cotizaciones>
         </div>
+    </div>
+
+    <div class="container-buttons-empresas">
+        <button (click)="navigateTo('/cotizaciones/AAPL')">
+            <i class="fs-4 bi-apple"></i> <span>Apple Inc.</span>
+        </button>
+        <button (click)="navigateTo('/cotizaciones/TSLA')">
+            <i class="fs-4 bi-ev-front"></i> <span>Tesla Inc.</span>
+        </button>
+        <button (click)="navigateTo('/cotizaciones/JPM')">
+            <i class="fs-4 bi-bank"></i> <span>JPMorgan Chase &
+                Co.</span>
+        </button>
+        <button (click)="navigateTo('/cotizaciones/ROG.SW')">
+            <i class="fs-4 bi-capsule"></i> <span>Roche Holding
+                AG.</span>
+        </button>
+        <button (click)="navigateTo('/cotizaciones/SHEL')">
+            <i class="fs-4 bi-fuel-pump"></i> <span>Shell
+                plc.</span>
+        </button>
+        <button (click)="navigateTo('/cotizaciones/V')">
+            <i class="fs-4 bi-credit-card-2-front"></i> <span>Visa
+                Inc.</span>
+        </button>
     </div>
 </div>

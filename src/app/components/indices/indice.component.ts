@@ -3,7 +3,7 @@ import { IValueIndice } from '../../interfaces/indices-value';
 import { DbService } from '../../services/db.service';
 import { Util } from '../../utils/util';
 import { ChartIndiceComponent } from './chart-line/chart-indice.component';
-import { SideBarHomeComponent } from '../home/sideBar/side-bar-home.component';
+import { SideBarHomeComponent } from '../sideBar/side-bar-home.component';
 
 @Component({
   selector: 'app-indice',
