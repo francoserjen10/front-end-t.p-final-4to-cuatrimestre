@@ -1,4 +1,10 @@
-<div style="width: 90%; height: 600px;">
-    <canvas #chartCanvas>
-    </canvas>
+<div class="chart-container">
+    <div class="chart-buttons">
+        <button (click)="changeData('day')">Ver por Día</button>
+        <button (click)="changeData('month')">Ver por Mes</button>
+    </div>
+
+    <div style="width: 90%; height: 600px;">
+        <canvas #chartCanvas></canvas>
+    </div>
 </div>

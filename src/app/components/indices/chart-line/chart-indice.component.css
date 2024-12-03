@@ -1,0 +1,12 @@
+.chart-buttons {
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.chart-buttons button {
+    margin-right: 5px;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+}

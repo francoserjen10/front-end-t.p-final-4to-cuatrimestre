@@ -2,7 +2,7 @@
     <app-side-bar-home />
     <div class="container-chart-pie">
         @if(hasLoaded) {
-        <app-chart-indice [data]="indicesChartData" />
+        <app-chart-indice [dataForDay]="indicesChartDataForDay" [dataForMonth]="indicesChartDataForMonth" />
         }
     </div>
 </div>

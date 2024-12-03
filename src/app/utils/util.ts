@@ -64,7 +64,7 @@ export class Util {
         return promediosPorDia;
     }
 
-    filterByMonths(cotizaciones: ICotizacion[]): ICotizacion[] {
+    filterCotizacionesByMonths(cotizaciones: ICotizacion[]): ICotizacion[] {
         const uniqueMonths = new Set<string>();
         return cotizaciones.filter((cotMarket) => {
             const month = cotMarket.fecha.slice(0, 7);
@@ -96,4 +96,27 @@ export class Util {
             return acc;
         }, {} as { [key: string]: IValueIndice[] });
     }
+
+    averageIndicesByDay(indices: IValueIndice[]): { [key: string]: number } {
+        const dailySums: { [key: string]: { sum: number; count: number } } = {};
+
+        indices.forEach((indice) => {
+            const day = indice.fecha; // Tomar la fecha como clave para agrupar
+            if (!dailySums[day]) {
+                dailySums[day] = { sum: 0, count: 0 };
+            }
+            dailySums[day].sum += indice.valorIndice; // Sumar el valor del índice
+            dailySums[day].count += 1; // Incrementar el contador
+        });
+
+        // Calcular el promedio para cada día
+        const dailyAverages: { [key: string]: number } = {};
+        Object.keys(dailySums).forEach((day) => {
+            dailyAverages[day] = dailySums[day].sum / dailySums[day].count;
+        });
+
+        return dailyAverages;
+    }
+
+
 }

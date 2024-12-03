@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { IValueIndice } from '../../../interfaces/indices-value';
+import 'chartjs-adapter-luxon';
 
 @Component({
   selector: 'app-chart-indice',
@@ -11,9 +12,10 @@ import { IValueIndice } from '../../../interfaces/indices-value';
 })
 export class ChartIndiceComponent {
 
-  @Input() data: { [key: string]: IValueIndice[] } = {};
+  @Input() dataForDay: { [key: string]: IValueIndice[] } = {};
+  @Input() dataForMonth: { [key: string]: IValueIndice[] } = {};
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
-
+  private chart: Chart | null = null; // Referencia al gráfico
   constructor() { }
 
   ngAfterViewInit(): void {
@@ -25,15 +27,18 @@ export class ChartIndiceComponent {
   crateChartLine() {
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
     if (ctx) {
-      new Chart(ctx, {
+      if (this.chart) {
+        this.chart.destroy();
+      }
+      this.chart = new Chart(ctx, {
         type: 'line', // Tipo de gráfico: línea
         data: {
-          labels: Object.keys(this.data), // Usando las claves de 'data' como etiquetas (eje X)
+          labels: Object.keys(this.dataForDay).map(date => new Date(date)), // Usando las claves de 'data' como etiquetas (eje X)
           datasets: this.createDatasets(),
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false, // Ajustar el gráfico según el contenedor
+          maintainAspectRatio: true, // Ajustar el gráfico según el contenedor
           scales: {
             x: {
               title: {
@@ -72,15 +77,13 @@ export class ChartIndiceComponent {
   // Preparar los datasets para Chart.js
   createDatasets() {
     const datasets: any = [];
-
-    Object.keys(this.data).forEach((key) => {
-      const areaData = this.data[key];
+    Object.keys(this.dataForDay).forEach((key) => {
+      const areaData = this.dataForDay[key];
       if (areaData) {
         const chartData = areaData.map((i) => ({
-          x: i.fecha, // Tiempo en el que ocurrió el valor
+          x: `${i.fecha}T${i.hora}`, // Tiempo en el que ocurrió el valor
           y: i.valorIndice, // El valor que quieres graficar
         }));
-
         // Agregar el dataset para cada área
         datasets.push({
           label: key, // Nombre del dataset
@@ -103,5 +106,10 @@ export class ChartIndiceComponent {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  changeData(type: 'day' | 'month'): void {
+    this.dataForDay = type === 'day' ? this.dataForDay : this.dataForMonth;
+    this.crateChartLine();
   }
 }
