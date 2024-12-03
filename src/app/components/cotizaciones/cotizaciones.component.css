@@ -1,6 +1,15 @@
-.layout {
+.container {
   display: flex;
-  flex: 1;
+  height: 100%;
+}
+
+.container-buttons-empresas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* gap: 10px; */
+  /* top: 50%; */
+  transform: translateY(50%);
 }
 
 .content-bag {
@@ -8,9 +17,9 @@
   /* Ocupa el espacio restante del layout */
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   padding: 2% 1%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   /* Permitir scroll en el contenido */
 }
 

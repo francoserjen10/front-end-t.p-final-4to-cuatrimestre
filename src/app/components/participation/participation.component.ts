@@ -3,7 +3,7 @@ import { ChartParticipacionComponent } from './chart-pie/chart-participacion.com
 import { ICotizacion } from '../../interfaces/cotizacion';
 import { DbService } from '../../services/db.service';
 import { Util } from '../../utils/util';
-import { SideBarHomeComponent } from '../home/sideBar/side-bar-home.component';
+import { SideBarHomeComponent } from '../sideBar/side-bar-home.component';
 
 @Component({
   selector: 'app-participation',

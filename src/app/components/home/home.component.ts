@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { DarkModeService } from '../../services/dark-mode.service';
-import { SideBarHomeComponent } from './sideBar/side-bar-home.component';
+import { SideBarHomeComponent } from '../sideBar/side-bar-home.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SideBarHomeComponent],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DarkModeService } from '../../services/dark-mode.service';
 import { ICotizacion } from '../../interfaces/cotizacion';
 import { DbService } from '../../services/db.service';
@@ -12,7 +12,7 @@ import { Util } from '../../utils/util';
 @Component({
   selector: 'app-cotizaciones',
   standalone: true,
-  imports: [ChartCotizacionesComponent, FormsModule, SideBarCotizacionesComponent],
+  imports: [ChartCotizacionesComponent, FormsModule, SideBarCotizacionesComponent, RouterLink],
   templateUrl: './cotizaciones.component.html',
   styleUrl: './cotizaciones.component.css'
 })
@@ -28,9 +28,9 @@ export class CotizacionesComponent implements OnInit {
   cotChartDataFoyYear: AreaData<Time>[] = [];
   isDataLoaded: boolean = false; // Estado para controlar la carga de datos
   util: Util;
-  // private handleDTV: new Util();
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private dbService: DbService,
   ) {
@@ -42,6 +42,10 @@ export class CotizacionesComponent implements OnInit {
       this.companyId = params.get('codEmpresa');
       this.getAllCotizaciones();
     });
+  }
+
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
   }
 
   getAllCotizaciones() {

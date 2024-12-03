@@ -1,7 +1,10 @@
 <div class="container-app bg-body-tertiary" [attr.data-bs-theme]="darkModeService.darkModeSignal()">
     <app-navBar />
     <app-stock-ticker />
-    <div class="content bg-body-tertiary">
-        <router-outlet></router-outlet>
+    <div class="layout">
+        <app-side-bar-home />
+        <div class="content bg-body-tertiary">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>
