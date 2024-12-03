@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { DarkModeService } from '../../services/dark-mode.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-navBar',
@@ -10,12 +9,6 @@ import { DarkModeService } from '../../services/dark-mode.service';
 })
 export class NavBarComponent {
 
-  darkModeService = inject(DarkModeService);
-
   constructor() { }
-
-  toggleDarkMode() {
-    this.darkModeService.updateDarkMode();
-  }
 
 }
