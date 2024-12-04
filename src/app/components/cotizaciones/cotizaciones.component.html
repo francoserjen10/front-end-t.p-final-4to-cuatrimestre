@@ -7,15 +7,20 @@
             <h1>{{cotizacion}}</h1>
             <h3>{{cotizacionChange}} <i class="bi bi-caret-up-fill"></i> </h3>
         </div>
+        @if(marketOpen){
         <div class="open-close-bag">
-            <i class="bi bi-clock"></i>
-            <p>Mercado cerrado</p>
+            <i class="bi bi-clock" style="color: #03a66d;"></i>
+            <p style="color: #03a66d;"> {{ "åpent marked" | translate }} </p>
         </div>
+        } @else {
+        <div class="open-close-bag">
+            <i class="bi bi-clock" style="color: red"></i>
+            <P style="color: red"> {{ "lukket marked" | translate}} </P>
+        </div>
+        }
         <div class="container-chart">
-            @if(isDataLoaded) {
             <app-chart-cotizaciones [forDay]="cotChartDataFoyDay" [forMonth]="cotChartDataFoyMonth"
                 [forYear]="cotChartDataFoyYear"></app-chart-cotizaciones>
-            }
         </div>
     </div>
 

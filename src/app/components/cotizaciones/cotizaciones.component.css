@@ -53,51 +53,33 @@
 
 .content-variability h3,
 .content-variability i {
-  /* Si el valor baja */
-  /* color: #E33B54; */
-  /* Si el valor aumenta */
   color: #03a66d;
-  /* font-weight: bold; */
 }
 
 .open-close-bag {
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .open-close-bag i {
-  margin-right: 5px;
-  /* Si el mercado esta abierto */
-  color: #03a66d;
-  /* Si el mercado esta cerrado */
-  color: red;
-  /* transition: color 0.3s ease; */
+  margin-right: 10px;
+  font-size: 24px;
+  transition: color 0.3s ease;
 }
 
 .open-close-bag p {
   margin: 0;
-}
-
-/* Se escribe de esta manera ya que permite manejar el mode de la pagina teniendo el control del mismo y permitiendo que el usuario lo cambie manualmente independientemende del mode del sistema operativo del usuario */
-[data-bs-theme='dark'] .content-variability h1 {
-  color: #eaecef;
-}
-
-[data-bs-theme='dark'] .title h2 {
-  color: #fcd535;
-  /* color: #eaecef; */
-}
-
-[data-bs-theme='dark'] .content-variability h3 {
-  /* Si el valor aumenta */
-  /* color: #0ecb81; */
-  color: #2ebd85;
-  /* Si el valor baja */
-  /* color: #F6465D */
-}
-
-[data-bs-theme='dark'] .open-close-bag p {
-  color: #adb5bd
+  font-size: 18px;
+  font-weight: bold;
+  color: inherit;
+  text-align: center;
+  padding: 0 10px;
 }
 
 @media (min-width: 768px) {

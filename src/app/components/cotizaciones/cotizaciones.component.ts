@@ -6,11 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { ChartCotizacionesComponent } from './chart-line/chart-cotizaciones.component';
 import { AreaData, Time } from 'lightweight-charts';
 import { CotizacionesServiceService } from '../../services/cotizaciones-service.service';
+import { DateTime } from 'luxon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cotizaciones',
   standalone: true,
-  imports: [ChartCotizacionesComponent, FormsModule, RouterLink],
+  imports: [ChartCotizacionesComponent, FormsModule, RouterLink, TranslateModule],
   templateUrl: './cotizaciones.component.html',
   styleUrl: './cotizaciones.component.css'
 })
@@ -23,7 +25,7 @@ export class CotizacionesComponent implements OnInit {
   cotChartDataFoyDay: AreaData<Time>[] = [];
   cotChartDataFoyMonth: AreaData<Time>[] = [];
   cotChartDataFoyYear: AreaData<Time>[] = [];
-  isDataLoaded: boolean = false; // Estado para controlar la carga de datos
+  marketOpen: boolean = true;
 
   constructor(
     private router: Router,
@@ -37,6 +39,7 @@ export class CotizacionesComponent implements OnInit {
       this.companyId = params.get('codEmpresa');
       this.getAllCotizaciones();
     });
+    this.marketOpeningAndClosing()
   }
 
   navigateTo(route: string): void {
@@ -56,9 +59,6 @@ export class CotizacionesComponent implements OnInit {
             this.detailsOfEmpresa(this.originalsCotizaciones);
           }, error(err) {
             console.error('Error al obtener las cotizaciones en el home', err);
-          },
-          complete: () => {
-            this.isDataLoaded = true;
           }
         });
     }
@@ -108,5 +108,17 @@ export class CotizacionesComponent implements OnInit {
     this.cotChartDataFoyYear = sortedData.filter((item, index, array) => {
       return index === 0 || item.time !== array[index - 1].time;
     });
+  }
+
+  marketOpeningAndClosing() {
+    const newDate = new Date().toISOString();
+    const dateNorway = DateTime.fromISO(newDate).setZone('Europe/Oslo');
+    const day = dateNorway.day;
+    const hora = dateNorway.hour;
+    if ((day < 0 || day > 4) || hora < 9 || hora >= 16) {
+      this.marketOpen = false;
+    } else {
+      this.marketOpen = true;
+    }
   }
 }

@@ -3,7 +3,6 @@
     overflow: hidden;
     position: relative;
     background-color: #f1f1f1;
-    /*No me esta tomando el background*/
     padding: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -12,7 +11,6 @@
     display: inline-block;
     white-space: nowrap;
     animation: ticker-scroll 60s linear infinite normal;
-    /* background-color: #4B0082; */
     font-family: 'Arial', sans-serif;
     font-size: 16px;
 }
