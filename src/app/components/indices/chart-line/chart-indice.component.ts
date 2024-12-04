@@ -2,11 +2,12 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { IValueIndice } from '../../../interfaces/indices-value';
 import 'chartjs-adapter-luxon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-chart-indice',
   standalone: true,
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './chart-indice.component.html',
   styleUrl: './chart-indice.component.css'
 })

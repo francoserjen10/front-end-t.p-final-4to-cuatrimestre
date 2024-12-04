@@ -2,7 +2,11 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img src="../../../assets/images/borsen.png" /></a>
         <div class="button-lenguage-container">
-            <button><span>boton lenguaje</span></button>
+            <select name="selectLenguage" id="selectLenguage" (change)="changeLanguage($event)">
+                @for (lenguage of selectLenguage; track lenguage.value) {
+                <option [value]="lenguage.value">{{ lenguage.name }}</option>
+                }
+            </select>
         </div>
     </div>
 </nav>
