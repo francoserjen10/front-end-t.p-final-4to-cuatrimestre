@@ -18,10 +18,10 @@ export class StockTickerComponent implements OnInit {
   constructor(private dbService: DbService, private cotizacionesServiceService: CotizacionesServiceService) { }
 
   ngOnInit(): void {
-    this.getAllCotizaciones();
+    this.getLatestCotizaciones();
   }
 
-  getAllCotizaciones() {
+  getLatestCotizaciones() {
     this.dbService.getLatestCotizacionesOfBackEnd()
       .subscribe({
         next: (value: ICotizacion[]) => {

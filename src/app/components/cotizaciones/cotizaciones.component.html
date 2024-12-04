@@ -12,8 +12,10 @@
             <p>Mercado cerrado</p>
         </div>
         <div class="container-chart">
+            @if(isDataLoaded) {
             <app-chart-cotizaciones [forDay]="cotChartDataFoyDay" [forMonth]="cotChartDataFoyMonth"
                 [forYear]="cotChartDataFoyYear"></app-chart-cotizaciones>
+            }
         </div>
     </div>
 

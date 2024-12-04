@@ -17,7 +17,7 @@ export class ChartIndiceComponent {
   @Input() dataForMonth: { [key: string]: IValueIndice[] } = {};
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
   private chart: Chart | null = null; // Referencia al gráfico
-  private currentData: { [key: string]: IValueIndice[] } = {}; 
+  private currentData: { [key: string]: IValueIndice[] } = {};
   constructor() { }
 
   ngAfterViewInit(): void {
@@ -36,7 +36,7 @@ export class ChartIndiceComponent {
       this.chart = new Chart(ctx, {
         type: 'line', // Tipo de gráfico: línea
         data: {
-          labels: Object.keys(this.currentData).map(date => new Date(date)), // Usando las claves de 'data' como etiquetas (eje X)
+          labels: Object.keys(this.currentData).map(date => date), // Usando las claves de 'data' como etiquetas (eje X)
           datasets: this.createDatasets(),
         },
         options: {

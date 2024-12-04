@@ -53,14 +53,14 @@ export class CotizacionesComponent implements OnInit {
             this.transformCotizacionesForHours();
             this.transformCotizacionesForDay();
             this.transformCotizacionesForMonth();
-            this.isDataLoaded = true;
             this.detailsOfEmpresa(this.originalsCotizaciones);
           }, error(err) {
             console.error('Error al obtener las cotizaciones en el home', err);
           },
+          complete: () => {
+            this.isDataLoaded = true;
+          }
         });
-    } else {
-      this.companyId = 'AAPL';
     }
   }
 
