@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChartParticipacionComponent } from './chart-pie/chart-participacion.component';
 import { ICotizacion } from '../../interfaces/cotizacion';
 import { DbService } from '../../services/db.service';
-import { Util } from '../../utils/util';
 import { SideBarHomeComponent } from '../sideBar/side-bar-home.component';
+import { CotizacionesServiceService } from '../../services/cotizaciones-service.service';
 
 @Component({
   selector: 'app-participation',
@@ -15,14 +15,12 @@ import { SideBarHomeComponent } from '../sideBar/side-bar-home.component';
 export class ParticipationComponent implements OnInit {
 
   originalsCotizaciones: ICotizacion[] = [];
-  util: Util;
   participaciones: { [empresa: string]: number } = {};
   hasLoaded = false;
 
-  constructor(private dbService: DbService) { this.util = new Util(); }
+  constructor(private dbService: DbService, private cotizacionesServiceService: CotizacionesServiceService) { }
 
   ngOnInit(): void {
-    this.util = new Util();
     this.getAllCotizaciones();
   }
 
@@ -43,7 +41,7 @@ export class ParticipationComponent implements OnInit {
   }
 
   calculateParticipations() {
-    const cotizacionesForEmpresa = this.util.groupByCompany(this.originalsCotizaciones);
+    const cotizacionesForEmpresa = this.cotizacionesServiceService.groupByCompany(this.originalsCotizaciones);
     const totalMarketCotizacion = this.originalsCotizaciones.reduce((total, cotizacion) => total + cotizacion.cotization, 0);
     for (const empresa in cotizacionesForEmpresa) {
       // hasOwnProperty => devuelve un booleano. verifica si existe la propiedad empresa
@@ -51,7 +49,6 @@ export class ParticipationComponent implements OnInit {
         const cotizacionesEmpresa = cotizacionesForEmpresa[empresa];
         const totalEmpresaCotizacion = cotizacionesEmpresa.reduce((total, cotizacion) => total + cotizacion.cotization, 0);
         this.participaciones[empresa] = parseFloat(((totalEmpresaCotizacion / totalMarketCotizacion) * 100).toFixed(2));
-        console.log('participaciones:', this.participaciones)
       }
     }
   }
