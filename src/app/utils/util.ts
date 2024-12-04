@@ -117,6 +117,4 @@ export class Util {
 
         return dailyAverages;
     }
-
-
 }

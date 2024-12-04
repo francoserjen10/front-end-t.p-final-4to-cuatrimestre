@@ -1,8 +1,33 @@
-.bi {
-    color: var(--bs-body-color);
-    transition: color 0.3s ease;
-}
-
 .button-lenguage-container {
     margin-right: 1%;
+}
+
+.button-lenguage-container select {
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #97cef3;
+    background-color: #f0f8ff;
+    color: #333;
+    font-size: 14px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.button-lenguage-container select:hover {
+    background-color: #d9ecf7;
+    border-color: #6495ed;
+}
+
+.button-lenguage-container select:focus {
+    outline: none;
+    border-color: #4169e1;
+    box-shadow: 0 0 5px #4169e1;
+}
+
+.button-lenguage-container option {
+    background-color: #ffffff;
+    color: #333;
 }
