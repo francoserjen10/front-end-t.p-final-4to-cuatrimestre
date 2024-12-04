@@ -111,34 +111,14 @@ export class CotizacionesComponent implements OnInit {
   }
 
   marketOpeningAndClosing() {
-    // tomar el dia de hoy
     const newDate = new Date().toISOString();
-    console.log('newDate', newDate);
-
-    // Pasarlo a noruego
     const dateNorway = DateTime.fromISO(newDate).setZone('Europe/Oslo');
-    console.log('dateNorway', dateNorway);
-
+    const day = dateNorway.day;
     const hora = dateNorway.hour;
-
-    // Si la hora es menor a 9 y mayor a 16, esta cerrado,
-    if (hora < 9 || hora >= 17) {
+    if ((day < 0 || day > 4) || hora < 9 || hora >= 16) {
       this.marketOpen = false;
     } else {
-      // Sino esta abierto
       this.marketOpen = true;
     }
   }
-
-  // transformDateUTCToNorway(indice: IValueIndice[]): IValueIndice[] {
-  //   return indice.map(data => {
-  //     const dateTimeUtc = `${data.fecha}T${data.hora}Z`
-  //     const norwayDate = DateTime.fromISO(dateTimeUtc).setZone('Europe/Oslo');
-  //     return {
-  //       ...data,
-  //       fecha: norwayDate.toFormat('yyyy-MM-dd'),
-  //       hora: norwayDate.toFormat('HH:mm')
-  //     };
-  //   });
-  // }
 }
