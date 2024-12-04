@@ -5,6 +5,7 @@
     background-color: #f1f1f1;
     /*No me esta tomando el background*/
     padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .ticker-content {
@@ -12,10 +13,26 @@
     white-space: nowrap;
     animation: ticker-scroll 60s linear infinite normal;
     /* background-color: #4B0082; */
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
 }
 
 .span-stock {
-    padding: 40px;
+    padding: 10px 20px;
+    margin-right: 50px;
+    display: inline-flex;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.span-stock .positive {
+    color: #28a745;
+}
+
+.span-stock .negative {
+    color: #dc3545;
 }
 
 @keyframes ticker-scroll {
@@ -28,6 +45,13 @@
     }
 }
 
-[data-bs-theme='dark'] .ticker-container {
-    background-color: #000;
+@media screen and (max-width: 768px) {
+    .ticker-content {
+        font-size: 14px;
+    }
+
+    .span-stock {
+        padding: 8px 16px;
+        margin-right: 30px;
+    }
 }

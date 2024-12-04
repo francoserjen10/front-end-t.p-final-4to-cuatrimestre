@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DbService } from '../../services/db.service';
 import { ICotizacion } from '../../interfaces/cotizacion';
-import { Util } from '../../utils/util';
+import { CotizacionesServiceService } from '../../services/cotizaciones-service.service';
 
 @Component({
   selector: 'app-stock-ticker',
@@ -14,21 +14,18 @@ import { Util } from '../../utils/util';
 export class StockTickerComponent implements OnInit {
 
   cotizaciones: ICotizacion[] | any = [];
-  util: Util;
 
-  constructor(private dbService: DbService) { 
-    this.util = new Util();
-  }
+  constructor(private dbService: DbService, private cotizacionesServiceService: CotizacionesServiceService) { }
 
   ngOnInit(): void {
-    this.getAllCotizaciones();
+    this.getLatestCotizaciones();
   }
 
-  getAllCotizaciones() {
+  getLatestCotizaciones() {
     this.dbService.getLatestCotizacionesOfBackEnd()
       .subscribe({
         next: (value: ICotizacion[]) => {
-          const groupedCotizaciones = this.util.groupByCompany(value);
+          const groupedCotizaciones = this.cotizacionesServiceService.groupByCompany(value);
           this.cotizaciones = this.calculateVariability(groupedCotizaciones);
         },
         error(err) {

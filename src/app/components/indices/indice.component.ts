@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IValueIndice } from '../../interfaces/indices-value';
 import { DbService } from '../../services/db.service';
-import { Util } from '../../utils/util';
 import { ChartIndiceComponent } from './chart-line/chart-indice.component';
 import { SideBarHomeComponent } from '../sideBar/side-bar-home.component';
+import { IndiceServiceService } from '../../services/indice-service.service';
 
 @Component({
   selector: 'app-indice',
@@ -18,9 +18,8 @@ export class IndiceComponent implements OnInit {
   indicesChartDataForDay: { [key: string]: IValueIndice[] } = {};
   indicesChartDataForMonth: { [key: string]: IValueIndice[] } = {};
   hasLoaded = false;
-  util: Util;
 
-  constructor(private dbService: DbService) { this.util = new Util(); }
+  constructor(private dbService: DbService, private indiceService: IndiceServiceService) { }
 
   ngOnInit(): void {
     this.getAllIndices();
@@ -30,9 +29,9 @@ export class IndiceComponent implements OnInit {
     this.dbService.getAllIndicesOfBackEnd()
       .subscribe({
         next: (value: IValueIndice[]) => {
-          const norwayDate = this.util.transformDateUTCToNorway(value);
+          const norwayDate = this.indiceService.transformDateUTCToNorway(value);
           const sortedIndices = this.indicesSorted(norwayDate);
-          const groupedIndices = this.util.groupByIndice(sortedIndices);
+          const groupedIndices = this.indiceService.groupByIndice(sortedIndices);
           const filteredIndices = this.getLastTwoIndices(groupedIndices);
           this.indicesChartDataForDay = filteredIndices;
           this.indicesChartDataForMonth = this.calculateDailyAverages(groupedIndices)
@@ -58,7 +57,7 @@ export class IndiceComponent implements OnInit {
     const processedData: { [key: string]: IValueIndice[] } = {};
     Object.keys(groupedIndices).forEach((key) => {
       const indices = groupedIndices[key];
-      const dailyAverages = this.util.averageIndicesByDay(indices); // Usa la función promedio
+      const dailyAverages = this.indiceService.averageIndicesByDay(indices); // Usa la función promedio
 
       // Transformar los datos para el formato del gráfico
       processedData[key] = Object.entries(dailyAverages).map(([fecha, promedio]) => ({
